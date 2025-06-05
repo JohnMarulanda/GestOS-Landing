@@ -16,6 +16,39 @@ if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);
 }
 
+// Estilos CSS para la animación de ondas de clic
+const clickHintStyles = `
+  @keyframes clickHint {
+    0% {
+      opacity: 0;
+      transform: translate(-50%, -50%) scale(0.5);
+    }
+    20% {
+      opacity: 0.6;
+      transform: translate(-50%, -50%) scale(1);
+    }
+    40% {
+      opacity: 0.3;
+      transform: translate(-50%, -50%) scale(1.5);
+    }
+    60% {
+      opacity: 0;
+      transform: translate(-50%, -50%) scale(2);
+    }
+    100% {
+      opacity: 0;
+      transform: translate(-50%, -50%) scale(2);
+    }
+  }
+`;
+
+// Inyectar estilos
+if (typeof document !== 'undefined') {
+  const styleSheet = document.createElement("style");
+  styleSheet.innerText = clickHintStyles;
+  document.head.appendChild(styleSheet);
+}
+
 // Iconos para las tarjetas
 const cardIcons = [
   <Brain key="brain" className="w-12 h-12" />,
@@ -216,11 +249,31 @@ export const Information = () => {
             className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-8 md:gap-6 xl:gap-4 justify-items-center opacity-0"
           >
             {cardsData.map((card, index) => (
-              <InteractiveCard 
+              <div 
                 key={index}
-                {...card} 
-                delay={0.1 * (index + 1)} 
-              />
+                className="relative group"
+              >
+                <InteractiveCard 
+                  {...card} 
+                  delay={0.1 * (index + 1)} 
+                />
+                
+                {/* Indicador sutil de clic - ondas ocasionales */}
+                <div className="absolute inset-0 pointer-events-none">
+                  <div 
+                    className="absolute top-1/2 left-1/2 w-4 h-4 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-cyan-400/60 opacity-0"
+                    style={{
+                      animation: `clickHint ${3 + index * 0.75}s infinite`
+                    }}
+                  ></div>
+                  <div 
+                    className="absolute top-1/2 left-1/2 w-8 h-8 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-blue-400/40 opacity-0"
+                    style={{
+                      animation: `clickHint ${3 + index * 0.75}s infinite 0.3s`
+                    }}
+                  ></div>
+                </div>
+              </div>
             ))}
           </div>
 

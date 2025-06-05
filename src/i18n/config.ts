@@ -281,9 +281,7 @@ const resources = {
             title: "Privacidad garantizada",
             description: "Todo el procesamiento se realiza localmente, tus datos nunca salen de tu dispositivo."
           }
-        },
-        interactiveHint: "Tarjetas interactivas",
-        clickHint: "Haz clic en las tarjetas para ver el efecto 3D"
+        }
       },
       // WhatIs
       whatIs: {
@@ -852,9 +850,7 @@ const resources = {
             title: "Privacy guaranteed",
             description: "All processing is done locally, your data never leaves your device."
           }
-        },
-        interactiveHint: "Interactive cards",
-        clickHint: "Click the cards to see the 3D effect"
+        }
       },
       // WhatIs
       whatIs: {
