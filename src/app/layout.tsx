@@ -10,7 +10,7 @@ const dmSans = DM_Sans({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "GestOS",
-  description: "GestOS es una plataforma de gestión de proyectos y tareas que te permite organizar tu trabajo de manera eficiente.",
+  description: "GestOS es una aplicación para controlar tu ordenador con gestos.",
   icons: {
     icon: "/Icono.ico",
     shortcut: "/Icono.ico",
