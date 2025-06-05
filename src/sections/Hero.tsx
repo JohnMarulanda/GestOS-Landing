@@ -4,11 +4,12 @@ import ArrowRight from "@/assets/arrow-right.svg";
 import cogImage from "@/assets/hands/DivineTouch.png";
 import cylinderImage from "@/assets/hands/Victory.png";
 import noodleImage from "@/assets/hands/Love.png";
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useMemo } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
+import { BetaModal } from '@/components/BetaModal';
 
 // Registrar plugins
 if (typeof window !== 'undefined') {
@@ -85,6 +86,7 @@ const ScrollIndicator = () => {
 export const Hero = () => {
   const { t } = useTranslation();
   const [currentTextIndex, setCurrentTextIndex] = useState(0);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const heroRef = useRef<HTMLElement>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
   const subtitleRef = useRef<HTMLParagraphElement>(null);
@@ -95,28 +97,48 @@ export const Hero = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const textContainerRef = useRef<HTMLDivElement>(null);
 
-  // Obtener las variaciones de texto traducidas
-  const textVariations = t('hero.textVariations', { returnObjects: true }) as Array<{
-    title: string;
-    subtitle: string;
-  }>;
+  // Optimizar las variaciones de texto con useMemo para evitar recreación en cada render
+  const textVariations = useMemo(() => {
+    return t('hero.textVariations', { returnObjects: true }) as Array<{
+      title: string;
+      subtitle: string;
+    }>;
+  }, [t]);
 
-  // Estado para mostrar contenido inicial inmediatamente
-  const [displayText, setDisplayText] = useState(textVariations[0]);
+  // Estado para mostrar contenido inicial inmediatamente - FIXED
+  const [displayText, setDisplayText] = useState(() => {
+    const variations = t('hero.textVariations', { returnObjects: true }) as Array<{
+      title: string;
+      subtitle: string;
+    }>;
+    return variations[0] || { title: '', subtitle: '' };
+  });
 
-  // Animación de cambio de texto (ahora sin dependencia problemática)
+  // Manejar cambios de idioma (cuando cambia t() o las traducciones)
   useEffect(() => {
+    if (textVariations.length > 0) {
+      setCurrentTextIndex(0); // Reiniciar al primer texto
+      setDisplayText(textVariations[0]); // Actualizar con la nueva traducción
+    }
+  }, [textVariations]); // Solo cuando cambian las traducciones (cambio de idioma)
+
+  // Animación de cambio de texto optimizada - FIXED
+  useEffect(() => {
+    if (!textVariations.length) return;
+    
     const interval = setInterval(() => {
       setCurrentTextIndex((prev) => (prev + 1) % textVariations.length);
     }, 4000);
 
     return () => clearInterval(interval);
-  }, [textVariations.length]); // Ahora depende de la longitud del array de traducciones
+  }, [textVariations.length]); // Solo depende de la longitud
 
-  // Actualizar el texto mostrado cuando cambia el índice
+  // Actualizar el texto mostrado cuando cambia el índice - OPTIMIZADO PARA EVITAR BUCLE
   useEffect(() => {
-    setDisplayText(textVariations[currentTextIndex]);
-  }, [currentTextIndex, textVariations]); // Incluir textVariations en las dependencias
+    if (textVariations[currentTextIndex]) {
+      setDisplayText(textVariations[currentTextIndex]);
+    }
+  }, [currentTextIndex]); // Solo cuando cambia el índice, sin incluir textVariations
 
   // ANIMACIONES PRINCIPALES (SE EJECUTAN UNA SOLA VEZ AL CARGAR)
   useEffect(() => {
@@ -297,7 +319,7 @@ export const Hero = () => {
     }, [titleRef.current, subtitleRef.current]); // Contexto específico solo para estos elementos
 
     return () => textCtx.revert();
-  }, [currentTextIndex]); // Solo se ejecuta cuando cambia el texto (y no en el primer render)
+  }, [currentTextIndex]); // Solo se ejecuta cuando cambia el texto
 
   return (
     <section 
@@ -332,15 +354,22 @@ export const Hero = () => {
               {/* Botón principal de descarga */}
               <button 
                 className="btn btn-primary inline-flex"
-                onClick={() => {
-                  console.log('Descargar clicked');
-                  alert('¡Botón Descargar funcionando!');
-                }}
+                onClick={() => setIsModalOpen(true)}
               >
                 {t('hero.buttons.getAccess')}
               </button>
 
-              {/* Botones de repositorios */}
+              {/* Botón de encuesta */}
+              <button 
+                className="btn btn-text gap-2 inline-flex items-center bg-white/10 backdrop-blur-sm hover:bg-white/20 transition-all duration-300 rounded-lg px-4 py-2 border border-white/20 hover:border-white/40"
+                onClick={() => {
+                  window.open('https://docs.google.com/forms/d/e/1FAIpQLSe-xFfvsmlu-toMN2OKWokRlKbVYD-nDxtjD9j-bCESe6djrg/viewform?usp=sharing&ouid=117042962859972826665', '_blank');
+                }}
+              >
+                <span className="text-black font-medium">{t('hero.buttons.survey')}</span>
+              </button>
+
+              {/* Botones de repositorios
               <div className="flex gap-3 flex-wrap">
                 <button 
                   className="btn btn-text gap-2 inline-flex items-center bg-white/10 backdrop-blur-sm hover:bg-white/20 transition-all duration-300 rounded-lg px-4 py-2 border border-white/20 hover:border-white/40"
@@ -365,7 +394,7 @@ export const Hero = () => {
                   </svg>
                   <span className="text-sm font-medium">Backend</span>
                 </button>
-              </div>
+              </div> */}
             </div>
           </div>
           
@@ -419,6 +448,12 @@ export const Hero = () => {
 
       {/* Scroll Indicator */}
       <ScrollIndicator />
+      
+      {/* Beta Modal */}
+      <BetaModal 
+        isOpen={isModalOpen} 
+        onClose={() => setIsModalOpen(false)} 
+      />
     </section>
   );
 };

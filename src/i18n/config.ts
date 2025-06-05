@@ -39,7 +39,8 @@ const resources = {
         scrollIndicator: "Scroll para explorar",
         buttons: {
           getAccess: "Obtener acceso gratuito",
-          learnMore: "Saber más"
+          learnMore: "Saber más",
+          survey: "Participar en la encuesta"
         }
       },
       // LogoTicker
@@ -48,110 +49,163 @@ const resources = {
       },
       // ProductShowcase
       productShowcase: {
-        badge: "Experience Innovation",
-        title: "Natural interaction with advanced technology",
-        description: "Discover how GestOS revolutionizes the way we interact with technology, offering intuitive control through natural gestures.",
+        badge: "Experimenta la Innovación",
+        title: "Interacción natural con tecnología avanzada",
+        description: "Descubre cómo GestOS revoluciona la forma en que interactuamos con la tecnología, ofreciendo control intuitivo a través de gestos naturales.",
         // Demo panel
         demoPanel: {
-          title: "Experience Our Interactive Demonstrations",
-          subtitle: "Choose an option to try different ways of interacting with technology through gestures",
+          title: "Experimenta Nuestras Demostraciones Interactivas",
+          subtitle: "Elige una opción para probar diferentes formas de interactuar con la tecnología mediante gestos",
           performanceWarning: {
-            title: "Performance Notice",
-            description: "When activating gesture recognition, the page may experience a slight decrease in performance due to real-time video processing. This is normal and temporary."
+            title: "Aviso de Rendimiento",
+            description: "Al activar el reconocimiento de gestos, la página puede experimentar una ligera disminución en el rendimiento debido al procesamiento de video en tiempo real. Esto es normal y temporal."
           }
         },
         // Demos
         demos: {
           gesture: {
-            title: "Gesture Recognition",
-            description: "Detects and recognizes 8 different gestures in real time",
-            loading: "Initializing...",
-            activeStatus: "Gesture Recognition Active",
-            availableGestures: "Available Gestures:",
+            title: "Reconocimiento de Gestos",
+            description: "Detecta y reconoce 8 gestos diferentes en tiempo real",
+            loading: "Inicializando...",
+            activeStatus: "Reconocimiento de Gestos Activo",
+            availableGestures: "Gestos Disponibles:",
             gestureList: [
-              "✋ Open Palm",
-              "✊ Closed Fist", 
-              "👍 Thumb Up",
-              "👎 Thumb Down",
-              "☝️ Pointing",
-              "✌️ Victory",
-              "🤟 I Love You",
-              "🫳 None"
+              "✋ Palma Abierta",
+              "✊ Puño Cerrado", 
+              "👍 Pulgar Arriba",
+              "👎 Pulgar Abajo",
+              "☝️ Señalando",
+              "✌️ Victoria",
+              "🤟 Te Amo",
+              "🫳 Ninguno"
             ],
-            instructions: "Show any of these gestures in front of the camera and you'll see real-time recognition."
+            instructions: "Muestra cualquiera de estos gestos frente a la cámara y verás el reconocimiento en tiempo real."
           },
           video: {
-            title: "Video Control",
-            description: "Control YouTube videos with hand gestures",
-            loading: "Initializing...",
-            activeStatus: "Video Control Active",
-            instructions: "Control the YouTube video using the indicated gestures. The camera will detect your movements automatically.",
+            title: "Control de Video",
+            description: "Controla videos de YouTube con gestos de manos",
+            loading: "Inicializando...",
+            activeStatus: "Control de Video Activo",
+            instructions: "Controla el video de YouTube usando los gestos indicados. La cámara detectará tus movimientos automáticamente.",
             controls: [
-              { gesture: "👍", action: "Forward 10s" },
-              { gesture: "👎", action: "Backward 10s" },
-              { gesture: "🤟", action: "Play/Pause" }
+              { gesture: "👍", action: "Adelantar 10s" },
+              { gesture: "👎", action: "Retroceder 10s" },
+              { gesture: "🤟", action: "Reproducir/Pausar" }
             ]
+          },
+          simon: {
+            title: "Simon Says",
+            description: "Juego de memoria con gestos",
+            loading: "Inicializando...",
+            activeStatus: "Simon Says Activo",
+            instructions: "Memoriza y repite las secuencias de gestos para entrenar tu memoria",
+            gameStates: {
+              waiting: "¿Listo para entrenar tu memoria?",
+              showing: "Memoriza la secuencia:",
+              playing: "¡Tu turno!",
+              success: "¡Perfecto!",
+              failure: "¡Ups!"
+            },
+            gestures: [
+              { emoji: "✊", name: "Puño" },
+              { emoji: "✋", name: "Palma" },
+              { emoji: "✌️", name: "Victoria" },
+              { emoji: "👍", name: "Arriba" },
+              { emoji: "👎", name: "Abajo" }
+            ],
+            ui: {
+              level: "Nivel",
+              best: "Mejor",
+              streak: "Racha",
+              record: "Record",
+              startLevel: "Iniciar Nivel",
+              yourTurn: "¡Tu turno!",
+              repeatSequence: "Repite la secuencia",
+              advancing: "Avanzando al nivel",
+              incorrectSequence: "Secuencia incorrecta. ¡Inténtalo de nuevo!",
+              correctSequence: "Secuencia correcta era:",
+              newGame: "Nuevo Juego",
+              resetStats: "Reset Stats",
+              preparing: "Preparando...",
+              gesturesAvailable: "Gestos Disponibles:",
+              initializing: "Iniciando Simon Says...",
+              loadingRecognition: "Cargando reconocimiento de gestos para el juego de memoria",
+              retry: "Reintentar",
+              closeGame: "Cerrar juego",
+              memoryIndicator: "MEMORIA",
+              activateGame: "Activar Juego",
+              waiting: "¿Listo para entrenar tu memoria?",
+              remember: "Memoriza la secuencia:",
+              perfect: "¡Perfecto!",
+              wrong: "¡Ups!",
+              tryAgain: "Secuencia incorrecta. ¡Inténtalo de nuevo!",
+              levelText: "Nivel {{level}} • {{nextLevel}} gestos",
+              levelUp: "Avanzando al nivel {{level}}...",
+              streakText: "Racha: {{streak}}",
+              repeatText: "Repite la secuencia ({{length}}/{{total}})",
+              memory: "MEMORIA"
+            }
           }
         },
         // Estados y mensajes
         states: {
-          inactive: "Select a Demonstration",
-          inactiveSubtitle: "Choose an option from the panel below to start",
-          active: "Active • Click to deactivate",
-          clickToActivate: "Click to activate",
-          recognizing: "RECOGNIZING",
-          controllingVideo: "CONTROLLING VIDEO",
-          cooldown: "Waiting... (2s)"
+          inactive: "Selecciona una Demostración",
+          inactiveSubtitle: "Elige una opción del panel inferior para comenzar",
+          active: "Activo • Clic para desactivar",
+          clickToActivate: "Clic para activar",
+          recognizing: "RECONOCIENDO",
+          controllingVideo: "CONTROLANDO VIDEO",
+          cooldown: "Esperando... (2s)"
         },
         // Componentes específicos
         gestureRecognition: {
-          title: "Gesture Recognition Disabled",
-          subtitle: "Activate recognition to turn on the camera",
-          description: "The camera will automatically activate when clicking 'Activate'",
-          gesturesAvailable: "✋ Available gestures: 8",
-          confidence: "Confidence",
-          hand: "Hand",
-          showGesture: "Show a gesture with your hand...",
-          loading: "Starting recognition...",
-          loadingDetails: "Loading TensorFlow optimizations for CPU",
+          title: "Reconocimiento de Gestos Desactivado",
+          subtitle: "Activa el reconocimiento para encender la cámara",
+          description: "La cámara se activará automáticamente al hacer clic en 'Activar'",
+          gesturesAvailable: "✋ Gestos disponibles: 8",
+          confidence: "Confianza",
+          hand: "Mano",
+          showGesture: "Muestra un gesto con tu mano...",
+          loading: "Iniciando reconocimiento...",
+          loadingDetails: "Cargando optimizaciones de TensorFlow para CPU",
           errorTitle: "Error",
-          retryButton: "Retry",
-          cameraError: "Could not access camera. Check permissions.",
+          retryButton: "Reintentar",
+          cameraError: "No se pudo acceder a la cámara. Verifica los permisos.",
           // Easter egg
           easterEgg: {
-            title: "Hey, don't be disrespectful!",
-            subtitle: "That gesture is not appropriate 🤭",
-            message: "Better use the other available gestures 😊"
+            title: "¡Oye, no seas irrespetuoso!",
+            subtitle: "Ese gesto no es apropiado 🤭",
+            message: "Mejor usa los otros gestos disponibles 😊"
           },
           // Debug
           debug: {
-            title: "Debug Info",
-            fingerStates: "Finger States",
-            fingerNames: ["Thumb", "Index", "Middle", "Ring", "Pinky"],
-            debugMessage: "Finger detection debug",
-            noFingers: "No fingers detected...",
-            normalMessages: "Normal Messages",
-            optimizationActive: '"TensorFlow Lite XNNPACK" = ✅ Optimization active',
-            extensionWarning: '"message channel closed" = ⚠️ Browser extension',
-            normalOperation: '"Created delegate for CPU" = ✅ Normal operation'
+            title: "Información de Debug",
+            fingerStates: "Estados de Dedos",
+            fingerNames: ["Pulgar", "Índice", "Medio", "Anular", "Meñique"],
+            debugMessage: "Debug de detección de dedos",
+            noFingers: "No se detectaron dedos...",
+            normalMessages: "Mensajes Normales",
+            optimizationActive: '"TensorFlow Lite XNNPACK" = ✅ Optimización activa',
+            extensionWarning: '"message channel closed" = ⚠️ Extensión del navegador',
+            normalOperation: '"Created delegate for CPU" = ✅ Operación normal'
           }
         },
         videoControl: {
-          title: "🎬 Gesture-Controllable Video",
-          instructions: "📋 Instructions:",
-          instructionText: "Play the video and use your gestures to control it in real time!",
-          loading: "Loading YouTube player...",
-          gestureControl: "Gesture Control",
+          title: "🎬 Video Controlable por Gestos",
+          instructions: "📋 Instrucciones:",
+          instructionText: "¡Reproduce el video y usa tus gestos para controlarlo en tiempo real!",
+          loading: "Cargando reproductor de YouTube...",
+          gestureControl: "Control por Gestos",
           actions: {
-            forward: "Video forwarded 10 seconds",
-            backward: "Video rewound 10 seconds", 
-            playPause: "Video paused/played"
+            forward: "Video adelantado 10 segundos",
+            backward: "Video retrocedido 10 segundos", 
+            playPause: "Video pausado/reproducido"
           },
-          lastAction: "Last action",
-          useGestures: "Use: 👍 👎 🤟 to control the video",
-          controlTitle: "Video Control with Gestures",
-          controlSubtitle: "Activate to control the video with your hands",
-          gestureControls: "👍 👎 🤟 Control gestures"
+          lastAction: "Última acción",
+          useGestures: "Usa: 👍 👎 🤟 para controlar el video",
+          controlTitle: "Control de Video con Gestos",
+          controlSubtitle: "Activa para controlar el video con tus manos",
+          gestureControls: "👍 👎 🤟 Gestos de control"
         }
       },
       // Information
@@ -228,8 +282,8 @@ const resources = {
         // Descripción principal
         mainContent: {
           title: "El futuro de la interacción humano-computadora",
-          description1: "GestOS es una aplicación que coloca una **barra lateral inteligente** en tu escritorio, permitiéndote controlar tu computadora usando solo gestos naturales de las manos.",
-          description2: "Cada gesto que realizas es detectado por la cámara de tu dispositivo y procesado en tiempo real por algoritmos de **visión por computadora** e **inteligencia artificial**.",
+          description1: "GestOS es una aplicación que coloca una barra lateral inteligente en tu escritorio, permitiéndote controlar tu computadora usando solo gestos naturales de las manos.",
+          description2: "Cada gesto que realizas es detectado por la cámara de tu dispositivo y procesado en tiempo real por algoritmos de visión por computadora e inteligencia artificial.",
           noHardwareTitle: "Sin hardware adicional",
           noHardwareDesc: "Solo necesitas la cámara web de tu computadora. GestOS funciona con cualquier cámara estándar."
         },
@@ -345,7 +399,7 @@ const resources = {
           ],
           recognitionInfo: {
             title: "Sistema de Reconocimiento Avanzado",
-            description: "GestOS utiliza un modelo de inteligencia artificial entrenado para reconocer **8 gestos principales**: None, Closed_Fist, Open_Palm, Pointing_Up, Thumb_Down, Thumb_Up, Victory e ILoveYou. **Cada función combina múltiples gestos** para ofrecer control completo y preciso.",
+            description: "GestOS utiliza un modelo de inteligencia artificial entrenado para reconocer 8 gestos principales: None, Closed_Fist, Open_Palm, Pointing_Up, Thumb_Down, Thumb_Up, Victory e ILoveYou. Cada función combina múltiples gestos para ofrecer control completo y preciso.",
             gestures: ["None", "Fist", "Palm", "Point", "Down", "Up", "Victory", "Love"]
           }
         },
@@ -357,7 +411,7 @@ const resources = {
             {
               title: "Gesture Testing",
               subtitle: "Ventana Principal",
-              description: "El centro de control donde ocurre toda la magia. Incluye reconocimiento gestual en tiempo real, juegos interactivos como **Piedra, Papel o Tijeras** y **Simon Says**, y diferentes modos de interacción exclusivos.",
+              description: "El centro de control donde ocurre toda la magia. Incluye reconocimiento gestual en tiempo real, juegos interactivos como Piedra, Papel o Tijeras y Simon Dice, y diferentes modos de interacción exclusivos.",
               badges: ["🎮 Juegos", "👋 Reconocimiento", "🎯 Interacciones"]
             },
             {
@@ -369,7 +423,7 @@ const resources = {
             {
               title: "Settings",
               subtitle: "Configuración General",
-              description: "Centro de personalización completo. Configuración de idioma (Español/Inglés), accesibilidad (tamaño de texto, alto contraste), tamaño de ventana y guardado automático de preferencias.",
+              description: "Centro de personalización completo, accesibilidad (tamaño de texto, alto contraste), tamaño de ventana y guardado automático de preferencias.",
               badges: ["🌍 Idioma", "👁️ Accesibilidad", "💾 Guardado"]
             },
             {
@@ -466,6 +520,25 @@ const resources = {
         secondaryButton: "Ver demostración",
         downloadText: "Descarga para"
       },
+      // Beta Modal
+      betaModal: {
+        title: "Aplicación de Escritorio",
+        warning: {
+          title: "Al ser una aplicación de escritorio, es recomendable contactar directamente con el desarrollador para obtener la versión beta.",
+          security: "Esto garantiza la seguridad de tu computadora y permite realizar pruebas en un ambiente controlado y revisado."
+        },
+        contact: {
+          instruction: "Para solicitar la versión beta, envía un correo a:",
+          subject: "Solicitud de Beta",
+          copyButton: "Copiar",
+          copiedButton: "¡Copiado!",
+          openEmailButton: "Abrir Cliente de Correo"
+        },
+        buttons: {
+          continueViewing: "Continuar Viendo",
+          close: "Cerrar"
+        }
+      },
       // Footer
       footer: {
         description: "GestOS revoluciona la interacción humano-computadora a través del reconocimiento de gestos en tiempo real.",
@@ -521,7 +594,8 @@ const resources = {
         scrollIndicator: "Scroll to explore",
         buttons: {
           getAccess: "Get free access",
-          learnMore: "Learn more"
+          learnMore: "Learn more",
+          survey: "Participate in the survey"
         }
       },
       // LogoTicker
@@ -530,22 +604,163 @@ const resources = {
       },
       // ProductShowcase
       productShowcase: {
-        badge: "Boost your creativity",
-        title: "A more effective approach to gesture recognition",
-        description: "Communicate with the naturalness of a gesture and get immediate results. Our technology interprets your movements with millimetric precision.",
-        features: {
-          accuracy: {
-            title: "Millimetric precision",
-            description: "Advanced algorithms ensure exact detection of every gesture."
-          },
-          realtime: {
-            title: "Real time",
-            description: "Instant response with no perceptible latency."
-          },
-          universal: {
-            title: "Universal",
-            description: "Compatible with any device with a camera."
+        badge: "Experience Innovation",
+        title: "Natural interaction with advanced technology",
+        description: "Discover how GestOS revolutionizes the way we interact with technology, offering intuitive control through natural gestures.",
+        // Demo panel
+        demoPanel: {
+          title: "Experience Our Interactive Demonstrations",
+          subtitle: "Choose an option to try different ways of interacting with technology through gestures",
+          performanceWarning: {
+            title: "Performance Notice",
+            description: "When activating gesture recognition, the page may experience a slight decrease in performance due to real-time video processing. This is normal and temporary."
           }
+        },
+        // Demos
+        demos: {
+          gesture: {
+            title: "Gesture Recognition",
+            description: "Detects and recognizes 8 different gestures in real time",
+            loading: "Initializing...",
+            activeStatus: "Gesture Recognition Active",
+            availableGestures: "Available Gestures:",
+            gestureList: [
+              "✋ Open Palm",
+              "✊ Closed Fist", 
+              "👍 Thumb Up",
+              "👎 Thumb Down",
+              "☝️ Pointing",
+              "✌️ Victory",
+              "🤟 I Love You",
+              "🫳 None"
+            ],
+            instructions: "Show any of these gestures in front of the camera and you'll see real-time recognition."
+          },
+          video: {
+            title: "Video Control",
+            description: "Control YouTube videos with hand gestures",
+            loading: "Initializing...",
+            activeStatus: "Video Control Active",
+            instructions: "Control the YouTube video using the indicated gestures. The camera will detect your movements automatically.",
+            controls: [
+              { gesture: "👍", action: "Forward 10s" },
+              { gesture: "👎", action: "Backward 10s" },
+              { gesture: "🤟", action: "Play/Pause" }
+            ]
+          },
+          simon: {
+            title: "Simon Says",
+            description: "Memory game with gestures",
+            loading: "Initializing...",
+            activeStatus: "Simon Says Active",
+            instructions: "Memorize and repeat gesture sequences to train your memory",
+            gameStates: {
+              waiting: "Ready to train your memory?",
+              showing: "Memorize the sequence:",
+              playing: "Your turn!",
+              success: "Perfect!",
+              failure: "Oops!"
+            },
+            gestures: [
+              { emoji: "✊", name: "Fist" },
+              { emoji: "✋", name: "Palm" },
+              { emoji: "✌️", name: "Victory" },
+              { emoji: "👍", name: "Up" },
+              { emoji: "👎", name: "Down" }
+            ],
+            ui: {
+              level: "Level",
+              best: "Best",
+              streak: "Streak",
+              record: "Record",
+              startLevel: "Start Level",
+              yourTurn: "Your turn!",
+              repeatSequence: "Repeat Sequence",
+              advancing: "Advancing to level",
+              incorrectSequence: "Incorrect sequence. Try again!",
+              correctSequence: "Correct sequence was:",
+              newGame: "New Game",
+              resetStats: "Reset Stats",
+              preparing: "Preparing...",
+              gesturesAvailable: "Available Gestures:",
+              initializing: "Starting Simon Says...",
+              loadingRecognition: "Loading gesture recognition for memory game",
+              retry: "Retry",
+              closeGame: "Close Game",
+              memoryIndicator: "MEMORY",
+              activateGame: "Activate Game",
+              waiting: "Ready to train your memory?",
+              remember: "Memorize the sequence:",
+              perfect: "Perfect!",
+              wrong: "Oops!",
+              tryAgain: "Incorrect sequence. Try again!",
+              levelText: "Level {{level}} • {{nextLevel}} gestures",
+              levelUp: "Advancing to level {{level}}...",
+              streakText: "Streak: {{streak}}",
+              repeatText: "Repeat sequence ({{length}}/{{total}})",
+              memory: "MEMORY"
+            }
+          }
+        },
+        // Estados y mensajes
+        states: {
+          inactive: "Select a Demonstration",
+          inactiveSubtitle: "Choose an option from the panel below to start",
+          active: "Active • Click to deactivate",
+          clickToActivate: "Click to activate",
+          recognizing: "RECOGNIZING",
+          controllingVideo: "CONTROLLING VIDEO",
+          cooldown: "Waiting... (2s)"
+        },
+        // Componentes específicos
+        gestureRecognition: {
+          title: "Gesture Recognition Disabled",
+          subtitle: "Activate recognition to turn on the camera",
+          description: "The camera will automatically activate when clicking 'Activate'",
+          gesturesAvailable: "✋ Available gestures: 8",
+          confidence: "Confidence",
+          hand: "Hand",
+          showGesture: "Show a gesture with your hand...",
+          loading: "Starting recognition...",
+          loadingDetails: "Loading TensorFlow optimizations for CPU",
+          errorTitle: "Error",
+          retryButton: "Retry",
+          cameraError: "Could not access camera. Check permissions.",
+          // Easter egg
+          easterEgg: {
+            title: "Hey, don't be disrespectful!",
+            subtitle: "That gesture is not appropriate 🤭",
+            message: "Better use the other available gestures 😊"
+          },
+          // Debug
+          debug: {
+            title: "Debug Info",
+            fingerStates: "Finger States",
+            fingerNames: ["Thumb", "Index", "Middle", "Ring", "Pinky"],
+            debugMessage: "Finger detection debug",
+            noFingers: "No fingers detected...",
+            normalMessages: "Normal Messages",
+            optimizationActive: '"TensorFlow Lite XNNPACK" = ✅ Optimization active',
+            extensionWarning: '"message channel closed" = ⚠️ Browser extension',
+            normalOperation: '"Created delegate for CPU" = ✅ Normal operation'
+          }
+        },
+        videoControl: {
+          title: "🎬 Gesture-Controllable Video",
+          instructions: "📋 Instructions:",
+          instructionText: "Play the video and use your gestures to control it in real time!",
+          loading: "Loading YouTube player...",
+          gestureControl: "Gesture Control",
+          actions: {
+            forward: "Video forwarded 10 seconds",
+            backward: "Video rewound 10 seconds", 
+            playPause: "Video paused/played"
+          },
+          lastAction: "Last action",
+          useGestures: "Use: 👍 👎 🤟 to control the video",
+          controlTitle: "Video Control with Gestures",
+          controlSubtitle: "Activate to control the video with your hands",
+          gestureControls: "👍 👎 🤟 Control gestures"
         }
       },
       // Information
@@ -622,8 +837,8 @@ const resources = {
         // Descripción principal
         mainContent: {
           title: "The future of human-computer interaction",
-          description1: "GestOS is an application that places an **intelligent sidebar** on your desktop, allowing you to control your computer using only natural hand gestures.",
-          description2: "Every gesture you make is detected by your device's camera and processed in real time by **computer vision** and **artificial intelligence** algorithms.",
+          description1: "GestOS is an application that places an intelligent sidebar on your desktop, allowing you to control your computer using only natural hand gestures.",
+          description2: "Every gesture you make is detected by your device's camera and processed in real time by computer vision and artificial intelligence algorithms.",
           noHardwareTitle: "No additional hardware",
           noHardwareDesc: "You only need your computer's webcam. GestOS works with any standard camera."
         },
@@ -739,7 +954,7 @@ const resources = {
           ],
           recognitionInfo: {
             title: "Advanced Recognition System",
-            description: "GestOS uses an artificial intelligence model trained to recognize **8 main gestures**: None, Closed_Fist, Open_Palm, Pointing_Up, Thumb_Down, Thumb_Up, Victory and ILoveYou. **Each function combines multiple gestures** to offer complete and precise control.",
+            description: "GestOS uses an artificial intelligence model trained to recognize 8 main gestures: None, Closed_Fist, Open_Palm, Pointing_Up, Thumb_Down, Thumb_Up, Victory and ILoveYou. Each function combines multiple gestures to offer complete and precise control.",
             gestures: ["None", "Fist", "Palm", "Point", "Down", "Up", "Victory", "Love"]
           }
         },
@@ -751,7 +966,7 @@ const resources = {
             {
               title: "Gesture Testing",
               subtitle: "Main Window",
-              description: "The control center where all the magic happens. Includes real-time gesture recognition, interactive games like **Rock, Paper, Scissors** and **Simon Says**, and different exclusive interaction modes.",
+              description: "The control center where all the magic happens. Includes real-time gesture recognition, interactive games like Rock, Paper, Scissors and Simon Says, and different exclusive interaction modes.",
               badges: ["🎮 Games", "👋 Recognition", "🎯 Interactions"]
             },
             {
@@ -763,7 +978,7 @@ const resources = {
             {
               title: "Settings",
               subtitle: "General Configuration",
-              description: "Complete customization center. Language configuration (Spanish/English), accessibility (text size, high contrast), window size and automatic preference saving.",
+              description: "Complete customization center, accessibility (text size, high contrast), window size and automatic preference saving.",
               badges: ["🌍 Language", "👁️ Accessibility", "💾 Save"]
             },
             {
@@ -860,6 +1075,25 @@ const resources = {
         secondaryButton: "Watch demo",
         downloadText: "Download for"
       },
+      // Beta Modal
+      betaModal: {
+        title: "Desktop Application",
+        warning: {
+          title: "As a desktop application, it is recommended to contact the developer directly to obtain the beta version.",
+          security: "This ensures the security of your computer and allows testing in a controlled and reviewed environment."
+        },
+        contact: {
+          instruction: "To request the beta version, send an email to:",
+          subject: "Beta Request",
+          copyButton: "Copy",
+          copiedButton: "Copied!",
+          openEmailButton: "Open Email Client"
+        },
+        buttons: {
+          continueViewing: "Continue Viewing",
+          close: "Close"
+        }
+      },
       // Footer
       footer: {
         description: "GestOS revolutionizes human-computer interaction through real-time gesture recognition.",
@@ -898,7 +1132,21 @@ i18n
     detection: {
       order: ['localStorage', 'navigator', 'htmlTag'],
       caches: ['localStorage'],
+      lookupLocalStorage: 'i18nextLng'
+    },
+
+    react: {
+      useSuspense: false
     }
   });
+
+// Forzar idioma español si no hay idioma guardado
+if (typeof window !== 'undefined') {
+  const savedLanguage = localStorage.getItem('i18nextLng');
+  if (!savedLanguage || savedLanguage === 'undefined') {
+    localStorage.setItem('i18nextLng', 'es');
+    i18n.changeLanguage('es');
+  }
+}
 
 export default i18n; 

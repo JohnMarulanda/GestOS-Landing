@@ -3,12 +3,13 @@
 import { AnimatePresence, motion } from 'framer-motion'
 import pyramidImage from "@/assets/hands/Up.png"
 import tubImage from "@/assets/hands/Down.png"
-import { Hand, Loader2, Eye, Play } from 'lucide-react'
+import { Hand, Loader2, Eye, Play, Brain } from 'lucide-react'
 import { useEffect, useRef, useState, useCallback } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { GestureRecognition, GestureRecognitionRef } from '@/components/GestureRecognition'
 import { VideoGestureControl, VideoGestureControlRef } from '@/components/VideoGestureControl'
+import SimonSaysGame, { SimonSaysGameRef } from '@/components/SimonSaysGame'
 import { useTranslation } from 'react-i18next'
 
 // Registrar GSAP plugins
@@ -17,7 +18,7 @@ if (typeof window !== 'undefined') {
 }
 
 // Tipos para las diferentes opciones de demostración
-type DemoOption = 'gesture' | 'video'
+type DemoOption = 'gesture' | 'video' | 'simon'
 
 // Componente Dock Icon para las opciones de demostración
 interface DemoDockIconProps {
@@ -47,7 +48,10 @@ const DemoDockIcon: React.FC<DemoDockIconProps> = ({
       : 'bg-blue-50 text-blue-700 hover:bg-blue-100 border-blue-200',
     purple: active 
       ? 'bg-gradient-to-r from-purple-500 to-purple-600 text-white shadow-purple-500/25' 
-      : 'bg-purple-50 text-purple-700 hover:bg-purple-100 border-purple-200'
+      : 'bg-purple-50 text-purple-700 hover:bg-purple-100 border-purple-200',
+    green: active 
+      ? 'bg-gradient-to-r from-green-500 to-green-600 text-white shadow-green-500/25' 
+      : 'bg-green-50 text-green-700 hover:bg-green-100 border-green-200'
   }
 
   return (
@@ -92,13 +96,15 @@ interface MultiDemoProps {
   onDemoChange: (demo: DemoOption | null) => void
   gestureLoading: boolean
   videoLoading: boolean
+  simonLoading: boolean
 }
 
 const MultiDemoPanel: React.FC<MultiDemoProps> = ({
   activeDemo,
   onDemoChange,
   gestureLoading,
-  videoLoading
+  videoLoading,
+  simonLoading
 }) => {
   const { t } = useTranslation();
   
@@ -116,6 +122,13 @@ const MultiDemoPanel: React.FC<MultiDemoProps> = ({
       title: t('productShowcase.demos.video.title'),
       description: t('productShowcase.demos.video.description'),
       color: 'purple'
+    },
+    {
+      id: 'simon' as DemoOption,
+      icon: Brain,
+      title: 'Simon Says',
+      description: 'Juego de memoria con gestos',
+      color: 'green'
     }
   ];
 
@@ -124,6 +137,14 @@ const MultiDemoPanel: React.FC<MultiDemoProps> = ({
     gesture: string;
     action: string;
   }>;
+
+  const simonGestures = [
+    { emoji: '✊', name: 'Puño' },
+    { emoji: '✋', name: 'Palma' },
+    { emoji: '✌️', name: 'Victoria' },
+    { emoji: '👍', name: 'Arriba' },
+    { emoji: '👎', name: 'Abajo' }
+  ];
 
   return (
     <div className="w-full max-w-5xl mx-auto px-4">
@@ -157,7 +178,7 @@ const MultiDemoPanel: React.FC<MultiDemoProps> = ({
         </div>
 
         {/* Demo Options */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+        <div className="grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2 gap-4 mb-6">
           {demos.map((demo) => (
             <DemoDockIcon
               key={demo.id}
@@ -167,7 +188,11 @@ const MultiDemoPanel: React.FC<MultiDemoProps> = ({
               color={demo.color}
               active={activeDemo === demo.id}
               onClick={() => onDemoChange(activeDemo === demo.id ? null : demo.id)}
-              loading={demo.id === 'gesture' ? gestureLoading : videoLoading}
+              loading={
+                demo.id === 'gesture' ? gestureLoading :
+                demo.id === 'video' ? videoLoading :
+                demo.id === 'simon' ? simonLoading : false
+              }
             />
           ))}
         </div>
@@ -185,19 +210,27 @@ const MultiDemoPanel: React.FC<MultiDemoProps> = ({
               <div className={`rounded-xl p-4 ${
                 activeDemo === 'gesture' 
                   ? 'bg-gradient-to-r from-blue-50 to-cyan-50' 
-                  : 'bg-gradient-to-r from-purple-50 to-pink-50'
+                  : activeDemo === 'video'
+                  ? 'bg-gradient-to-r from-purple-50 to-pink-50'
+                  : 'bg-gradient-to-r from-green-50 to-emerald-50'
               }`}>
                 <div className="text-center">
                   <div className="flex items-center justify-center gap-2 mb-3">
                     <Eye className={`w-5 h-5 ${
-                      activeDemo === 'gesture' ? 'text-blue-600' : 'text-purple-600'
+                      activeDemo === 'gesture' ? 'text-blue-600' : 
+                      activeDemo === 'video' ? 'text-purple-600' :
+                      'text-green-600'
                     }`} />
                     <span className={`font-semibold ${
-                      activeDemo === 'gesture' ? 'text-blue-800' : 'text-purple-800'
+                      activeDemo === 'gesture' ? 'text-blue-800' : 
+                      activeDemo === 'video' ? 'text-purple-800' :
+                      'text-green-800'
                     }`}>
                       {activeDemo === 'gesture' 
                         ? t('productShowcase.demos.gesture.activeStatus')
-                        : t('productShowcase.demos.video.activeStatus')
+                        : activeDemo === 'video'
+                        ? t('productShowcase.demos.video.activeStatus')
+                        : 'Simon Says Activo'
                       }
                     </span>
                   </div>
@@ -210,7 +243,7 @@ const MultiDemoPanel: React.FC<MultiDemoProps> = ({
                         </div>
                       ))}
                     </div>
-                  ) : (
+                  ) : activeDemo === 'video' ? (
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-2 text-xs text-gray-700 mb-3">
                       {videoControls.map((control, index) => (
                         <div key={index} className="bg-white/60 rounded-lg p-2 flex items-center gap-2">
@@ -223,12 +256,23 @@ const MultiDemoPanel: React.FC<MultiDemoProps> = ({
                         </div>
                       ))}
                     </div>
+                  ) : (
+                    <div className="grid grid-cols-2 md:grid-cols-5 gap-2 text-xs text-gray-700 mb-3">
+                      {simonGestures.map((gesture, index) => (
+                        <div key={index} className="bg-white/60 rounded-lg p-2 flex items-center gap-2">
+                          <span className="text-lg">{gesture.emoji}</span>
+                          <span className="font-medium">{gesture.name}</span>
+                        </div>
+                      ))}
+                    </div>
                   )}
 
                   <p className="text-xs text-gray-600">
                     {activeDemo === 'gesture' 
                       ? t('productShowcase.demos.gesture.instructions')
-                      : t('productShowcase.demos.video.instructions')
+                      : activeDemo === 'video'
+                      ? t('productShowcase.demos.video.instructions')
+                      : 'Memoriza y repite las secuencias de gestos para entrenar tu memoria'
                     }
                   </p>
                 </div>
@@ -256,9 +300,11 @@ export const ProductShowcase = () => {
   const [activeDemo, setActiveDemo] = useState<DemoOption | null>(null)
   const [gestureLoading, setGestureLoading] = useState(false)
   const [videoLoading, setVideoLoading] = useState(false)
+  const [simonLoading, setSimonLoading] = useState(false)
   
   const gestureRef = useRef<GestureRecognitionRef>(null)
   const videoRef = useRef<VideoGestureControlRef>(null)
+  const simonRef = useRef<SimonSaysGameRef>(null)
 
   const handleDemoChange = useCallback(async (demo: DemoOption | null) => {
     if (demo && demo !== activeDemo) {
@@ -273,6 +319,11 @@ export const ProductShowcase = () => {
         await new Promise(resolve => setTimeout(resolve, 500))
         setActiveDemo(demo)
         setVideoLoading(false)
+      } else if (demo === 'simon') {
+        setSimonLoading(true)
+        await new Promise(resolve => setTimeout(resolve, 500))
+        setActiveDemo(demo)
+        setSimonLoading(false)
       }
     } else {
       // Desactivar demo actual
@@ -543,6 +594,22 @@ export const ProductShowcase = () => {
                 </motion.div>
               )}
 
+              {activeDemo === 'simon' && (
+                <motion.div
+                  key="simon"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -20 }}
+                  transition={{ duration: 0.5 }}
+                >
+                  <SimonSaysGame
+                    ref={simonRef}
+                    isActive={activeDemo === 'simon'}
+                    onToggle={(active) => !active && setActiveDemo(null)}
+                  />
+                </motion.div>
+              )}
+
               {!activeDemo && (
                 <motion.div
                   key="placeholder"
@@ -568,6 +635,7 @@ export const ProductShowcase = () => {
               onDemoChange={handleDemoChange}
               gestureLoading={gestureLoading}
               videoLoading={videoLoading}
+              simonLoading={simonLoading}
             />
           </div>
 

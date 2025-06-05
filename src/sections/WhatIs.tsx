@@ -29,6 +29,11 @@ import victoryImage from "@/assets/hands/Victory.png";
 import fistImage from "@/assets/hands/Fist.png";
 import openPalmImage from "@/assets/hands/OpenPalm.png";
 import downImage from "@/assets/hands/Down.png";
+// Capturas de pantalla de las ventanas de la aplicación
+import gestureTestingImage from "@/assets/screenshots/GestureTesting.png";
+import settingsImage from "@/assets/screenshots/Settings.png";
+import helpSupportImage1 from "@/assets/screenshots/HelpSupport1.png";
+import helpSupportImage2 from "@/assets/screenshots/HelpSupport2.png";
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useTranslation } from 'react-i18next';
@@ -934,17 +939,50 @@ export const WhatIs = () => {
                   ))}
                 </div>
               </div>
-              <div className="bg-gray-100 rounded-2xl p-8 text-center">
-                <div className="text-gray-400 text-6xl mb-4">📸</div>
-                <p className="text-gray-500">Captura de pantalla próximamente</p>
+              <div className="relative group">
+                <div className="absolute -inset-1 bg-gradient-to-r from-cyan-500 to-blue-600 rounded-2xl blur opacity-25 group-hover:opacity-75 transition duration-1000 group-hover:duration-200"></div>
+                <div className="relative bg-white rounded-2xl p-4 shadow-2xl border border-gray-200 group-hover:scale-105 transition-transform duration-300">
+                  <div className="bg-gray-900 rounded-xl overflow-hidden shadow-inner">
+                    <Image
+                      src={gestureTestingImage}
+                      alt="Gesture Testing Window Screenshot"
+                      className="w-full h-auto object-contain hover:scale-105 transition-transform duration-300"
+                      quality={95}
+                      priority={false}
+                    />
+                  </div>
+                  <div className="absolute top-6 right-6 bg-cyan-500 text-white px-3 py-1 rounded-full text-xs font-medium shadow-lg">
+                    Ventana Principal
+                  </div>
+                </div>
               </div>
             </div>
 
             {/* Info Gestures - Catálogo */}
             <div className="grid lg:grid-cols-2 gap-12 items-center">
-              <div className="bg-gray-100 rounded-2xl p-8 text-center lg:order-1">
-                <div className="text-gray-400 text-6xl mb-4">📸</div>
-                <p className="text-gray-500">Captura de pantalla próximamente</p>
+              <div className="relative group lg:order-1">
+                <div className="absolute -inset-1 bg-gradient-to-r from-green-500 to-teal-600 rounded-2xl blur opacity-25 group-hover:opacity-75 transition duration-1000 group-hover:duration-200"></div>
+                <div className="relative bg-white rounded-2xl p-4 shadow-2xl border border-gray-200 group-hover:scale-105 transition-transform duration-300">
+                  <div className="bg-gradient-to-br from-green-50 to-teal-50 rounded-xl p-12 text-center min-h-[300px] flex flex-col items-center justify-center shadow-inner">
+                    <div className="bg-green-500 rounded-full p-6 mb-6 group-hover:scale-110 transition-transform duration-300">
+                      <Brain className="w-16 h-16 text-white" />
+                    </div>
+                    <h5 className="text-xl font-bold text-green-800 mb-3">Catálogo Interactivo</h5>
+                    <p className="text-green-600 text-sm mb-4">Guía completa de gestos disponibles</p>
+                    <div className="flex gap-2 text-2xl group-hover:scale-110 transition-transform duration-300">
+                      <span>✋</span>
+                      <span>✊</span>
+                      <span>👍</span>
+                      <span>👎</span>
+                      <span>☝️</span>
+                      <span>✌️</span>
+                      <span>🤟</span>
+                    </div>
+                  </div>
+                  <div className="absolute top-6 right-6 bg-green-500 text-white px-3 py-1 rounded-full text-xs font-medium shadow-lg">
+                    Próximamente
+                  </div>
+                </div>
               </div>
               <div className="space-y-6 lg:order-2">
                 <div className="flex items-center gap-3 mb-4">
@@ -988,17 +1026,43 @@ export const WhatIs = () => {
                   ))}
                 </div>
               </div>
-              <div className="bg-gray-100 rounded-2xl p-8 text-center">
-                <div className="text-gray-400 text-6xl mb-4">📸</div>
-                <p className="text-gray-500">Captura de pantalla próximamente</p>
+              <div className="relative group">
+                <div className="absolute -inset-1 bg-gradient-to-r from-purple-500 to-pink-600 rounded-2xl blur opacity-25 group-hover:opacity-75 transition duration-1000 group-hover:duration-200"></div>
+                <div className="relative bg-white rounded-2xl p-4 shadow-2xl border border-gray-200 group-hover:scale-105 transition-transform duration-300">
+                  <div className="bg-gray-900 rounded-xl overflow-hidden shadow-inner">
+                    <Image
+                      src={settingsImage}
+                      alt="Settings Window Screenshot"
+                      className="w-full h-auto object-contain hover:scale-105 transition-transform duration-300"
+                      quality={95}
+                      priority={false}
+                    />
+                  </div>
+                  <div className="absolute top-6 right-6 bg-purple-500 text-white px-3 py-1 rounded-full text-xs font-medium shadow-lg">
+                    Configuración
+                  </div>
+                </div>
               </div>
             </div>
 
             {/* Help & Support - Ayuda */}
             <div className="grid lg:grid-cols-2 gap-12 items-center">
-              <div className="bg-gray-100 rounded-2xl p-8 text-center lg:order-1">
-                <div className="text-gray-400 text-6xl mb-4">📸</div>
-                <p className="text-gray-500">Captura de pantalla próximamente</p>
+              <div className="relative group lg:order-1">
+                <div className="absolute -inset-1 bg-gradient-to-r from-amber-500 to-orange-600 rounded-2xl blur opacity-25 group-hover:opacity-75 transition duration-1000 group-hover:duration-200"></div>
+                <div className="relative bg-white rounded-2xl p-4 shadow-2xl border border-gray-200 group-hover:scale-105 transition-transform duration-300">
+                  <div className="bg-gray-900 rounded-xl overflow-hidden shadow-inner">
+                    <Image
+                      src={helpSupportImage1}
+                      alt="Help & Support Window Screenshot"
+                      className="w-full h-auto object-contain hover:scale-105 transition-transform duration-300"
+                      quality={95}
+                      priority={false}
+                    />
+                  </div>
+                  <div className="absolute top-6 right-6 bg-amber-500 text-white px-3 py-1 rounded-full text-xs font-medium shadow-lg">
+                    Ayuda y Soporte
+                  </div>
+                </div>
               </div>
               <div className="space-y-6 lg:order-2">
                 <div className="flex items-center gap-3 mb-4">

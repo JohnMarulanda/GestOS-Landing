@@ -3,10 +3,11 @@
 import starImage from "@/assets/hands/Victory.png";
 import springImage from "@/assets/hands/Fist.png";
 import Image from "next/image";
-import { useRef, useEffect } from 'react';
+import { useRef, useEffect, useState } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useTranslation } from 'react-i18next';
+import { BetaModal } from '@/components/BetaModal';
 
 // Registrar GSAP plugins
 if (typeof window !== 'undefined') {
@@ -15,6 +16,7 @@ if (typeof window !== 'undefined') {
 
 export const CallToAction = () => {
   const { t } = useTranslation();
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
@@ -257,11 +259,20 @@ export const CallToAction = () => {
           </div>
         </div>
         <div ref={buttonsRef} className="flex justify-center gap-2 mt-10">
-          <button className="btn btn-primary">
+          <button 
+            className="btn btn-primary"
+            onClick={() => setIsModalOpen(true)}
+          >
             {t('callToAction.primaryButton')}
           </button>
         </div>   
-      </div>   
+      </div>
+      
+      {/* Beta Modal */}
+      <BetaModal 
+        isOpen={isModalOpen} 
+        onClose={() => setIsModalOpen(false)} 
+      />   
     </section>
   );
 };
