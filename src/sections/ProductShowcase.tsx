@@ -3,7 +3,7 @@
 import { AnimatePresence, motion } from 'framer-motion'
 import pyramidImage from "@/assets/hands/Up.png"
 import tubImage from "@/assets/hands/Down.png"
-import { Hand, Loader2, Eye, Play, Brain } from 'lucide-react'
+import { Hand, Loader2, Eye, Play, Brain, Monitor, Camera, Zap, Smartphone } from 'lucide-react'
 import { useEffect, useRef, useState, useCallback } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
@@ -285,6 +285,98 @@ const MultiDemoPanel: React.FC<MultiDemoProps> = ({
   )
 }
 
+// Componente de recomendación para móviles
+const MobileRecommendation: React.FC = () => {
+  const { t } = useTranslation();
+  
+  const requirements = t('productShowcase.mobileRecommendation.requirements', { returnObjects: true }) as string[];
+  
+  return (
+    <motion.div
+      className="lg:hidden w-full max-w-4xl mx-auto px-4"
+      initial={{ opacity: 0, y: 30 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay: 0.3, duration: 0.6, ease: 'easeOut' }}
+    >
+      <div className="bg-white/90 backdrop-blur-lg rounded-3xl border border-gray-200/60 shadow-2xl p-4 sm:p-6 md:p-8 overflow-hidden">
+        {/* Header con icono */}
+        <div className="text-center mb-6">
+          <div className="flex items-center justify-center gap-2 sm:gap-3 mb-4">
+            <div className="bg-gradient-to-r from-cyan-500 to-blue-500 p-2 sm:p-3 rounded-xl">
+              <Monitor className="w-6 h-6 sm:w-8 sm:h-8 text-white" />
+            </div>
+            <Smartphone className="w-5 h-5 sm:w-6 sm:h-6 text-gray-400" />
+          </div>
+          
+          <h3 className="text-xl sm:text-2xl font-bold text-gray-800 mb-2 px-2">
+            {t('productShowcase.mobileRecommendation.title')}
+          </h3>
+          <p className="text-gray-600 text-base sm:text-lg px-2">
+            {t('productShowcase.mobileRecommendation.subtitle')}
+          </p>
+        </div>
+
+        {/* Descripción */}
+        <div className="mb-6">
+          <p className="text-gray-700 text-center mb-4 font-medium text-sm sm:text-base px-2">
+            {t('productShowcase.mobileRecommendation.description')}
+          </p>
+          
+          {/* Lista de requisitos */}
+          <div className="grid grid-cols-1 gap-3">
+            {requirements.map((requirement, index) => (
+              <motion.div
+                key={index}
+                className="flex items-center gap-3 bg-white/80 rounded-xl p-3 border border-gray-100 mx-auto max-w-sm w-full"
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.1 * index }}
+              >
+                <div className="text-cyan-500 text-lg flex-shrink-0">{requirement.split(' ')[0]}</div>
+                <span className="text-gray-700 text-sm sm:text-base font-medium break-words">
+                  {requirement.substring(requirement.indexOf(' ') + 1)}
+                </span>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+
+        {/* Recomendación principal */}
+        <div className="bg-gradient-to-r from-cyan-50 via-blue-50 to-teal-50 border border-cyan-200/50 rounded-2xl p-4 sm:p-6 text-center">
+          <p className="text-base sm:text-lg mb-4 font-medium text-gray-800 px-2">
+            {t('productShowcase.mobileRecommendation.recommendation')}
+          </p>
+          
+          <motion.button
+            className="bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 text-white font-semibold py-3 px-4 sm:px-6 rounded-xl shadow-lg inline-flex items-center gap-2 transition-all duration-300 text-sm sm:text-base"
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+            onClick={() => {
+              // Copiar URL al portapapeles para facilitar el acceso
+              navigator.clipboard.writeText(window.location.href);
+            }}
+          >
+            <Monitor className="w-4 h-4 sm:w-5 sm:h-5 flex-shrink-0" />
+            <span className="break-words">{t('productShowcase.mobileRecommendation.cta')}</span>
+          </motion.button>
+          
+          <p className="text-cyan-600 text-xs mt-3">
+            💡 URL copiada al portapapeles
+          </p>
+        </div>
+
+        {/* Iconos decorativos */}
+        <div className="flex justify-center gap-4 sm:gap-6 mt-6 opacity-40">
+          <Camera className="w-5 h-5 sm:w-6 sm:h-6 text-gray-500" />
+          <Hand className="w-5 h-5 sm:w-6 sm:h-6 text-gray-500" />
+          <Zap className="w-5 h-5 sm:w-6 sm:h-6 text-gray-500" />
+          <Brain className="w-5 h-5 sm:w-6 sm:h-6 text-gray-500" />
+        </div>
+      </div>
+    </motion.div>
+  )
+}
+
 // Componente principal del ProductShowcase actualizado
 export const ProductShowcase = () => {
   const { t } = useTranslation();
@@ -558,8 +650,8 @@ export const ProductShowcase = () => {
           </p>
         </div>
         
-        {/* Contenedor principal con las demostraciones */}
-        <div className="relative mt-16">
+        {/* Contenedor principal con las demostraciones - Solo en pantallas grandes */}
+        <div className="relative mt-16 hidden lg:block">
           <div ref={demoContainerRef} className="max-w-6xl mx-auto opacity-0">
             <AnimatePresence mode="wait">
               {activeDemo === 'gesture' && (
@@ -628,7 +720,7 @@ export const ProductShowcase = () => {
             </AnimatePresence>
           </div>
 
-          {/* Panel de demostraciones */}
+          {/* Panel de demostraciones - Solo en pantallas grandes */}
           <div ref={dockRef} className="mt-8 opacity-0">
             <MultiDemoPanel
               activeDemo={activeDemo}
@@ -639,14 +731,14 @@ export const ProductShowcase = () => {
             />
           </div>
 
-          {/* Elementos decorativos con GSAP */}
+          {/* Elementos decorativos con GSAP - Solo en pantallas grandes */}
           <img 
             ref={pyramidRef}
             src={pyramidImage.src} 
             alt="pyramid" 
             height={248} 
             width={248} 
-            className="hidden md:block absolute -right-36 -top-32 opacity-0" 
+            className="hidden xl:block absolute -right-36 -top-32 opacity-0" 
           />
           <img 
             ref={tubRef}
@@ -654,8 +746,13 @@ export const ProductShowcase = () => {
             alt="tub" 
             height={220} 
             width={220} 
-            className="hidden md:block absolute -left-36 -bottom-30 opacity-0" 
+            className="hidden xl:block absolute -left-36 -bottom-30 opacity-0" 
           />
+        </div>
+
+        {/* Recomendación para dispositivos móviles - Solo en pantallas pequeñas */}
+        <div className="mt-16">
+          <MobileRecommendation />
         </div>
       </div>
     </section>

@@ -157,6 +157,20 @@ const resources = {
           controllingVideo: "CONTROLANDO VIDEO",
           cooldown: "Esperando... (2s)"
         },
+        // Recomendación para dispositivos móviles
+        mobileRecommendation: {
+          title: "💻 Mejor Experiencia en Computadora",
+          subtitle: "Para una experiencia óptima probando nuestras demostraciones interactivas",
+          description: "Las demostraciones de reconocimiento de gestos funcionan mejor en:",
+          requirements: [
+            "💻 Computadora de escritorio o laptop",
+            "📹 Cámara web integrada o externa",
+            "🖥️ Pantalla más grande para mejor visualización",
+            "⚡ Mayor poder de procesamiento para IA en tiempo real"
+          ],
+          recommendation: "Te recomendamos visitar esta página desde una computadora con cámara para vivir la experiencia completa de control por gestos.",
+          cta: "Abrir en computadora para probar las demos"
+        },
         // Componentes específicos
         gestureRecognition: {
           title: "Reconocimiento de Gestos Desactivado",
@@ -267,7 +281,9 @@ const resources = {
             title: "Privacidad garantizada",
             description: "Todo el procesamiento se realiza localmente, tus datos nunca salen de tu dispositivo."
           }
-        }
+        },
+        interactiveHint: "Tarjetas interactivas",
+        clickHint: "Haz clic en las tarjetas para ver el efecto 3D"
       },
       // WhatIs
       whatIs: {
@@ -712,6 +728,20 @@ const resources = {
           controllingVideo: "CONTROLLING VIDEO",
           cooldown: "Waiting... (2s)"
         },
+        // Recomendación para dispositivos móviles
+        mobileRecommendation: {
+          title: "💻 Better Computer Experience",
+          subtitle: "For an optimal experience testing our interactive demonstrations",
+          description: "Gesture recognition demonstrations work better on:",
+          requirements: [
+            "💻 Desktop or laptop computer",
+            "📹 Integrated or external webcam",
+            "🖥️ Larger screen for better visualization",
+            "⚡ More processing power for real-time AI"
+          ],
+          recommendation: "We recommend visiting this page from a computer with a webcam to experience the complete control by gestures.",
+          cta: "Open on computer to test demos"
+        },
         // Componentes específicos
         gestureRecognition: {
           title: "Gesture Recognition Disabled",
@@ -822,7 +852,9 @@ const resources = {
             title: "Privacy guaranteed",
             description: "All processing is done locally, your data never leaves your device."
           }
-        }
+        },
+        interactiveHint: "Interactive cards",
+        clickHint: "Click the cards to see the 3D effect"
       },
       // WhatIs
       whatIs: {
