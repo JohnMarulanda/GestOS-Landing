@@ -18,10 +18,10 @@ if (typeof window !== 'undefined') {
 
 // Iconos para las tarjetas
 const cardIcons = [
-  <Brain className="w-12 h-12" />,
-  <Zap className="w-12 h-12" />,
-  <Eye className="w-12 h-12" />,
-  <Hand className="w-12 h-12" />
+  <Brain key="brain" className="w-12 h-12" />,
+  <Zap key="zap" className="w-12 h-12" />,
+  <Eye key="eye" className="w-12 h-12" />,
+  <Hand key="hand" className="w-12 h-12" />
 ];
 
 const cardGradients = [
