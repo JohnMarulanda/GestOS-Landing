@@ -9,54 +9,48 @@ import starImage from "@/assets/hands/Fist.png";
 import cylinderImage from "@/assets/hands/Victory.png";
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useTranslation } from 'react-i18next';
 
 // Registrar GSAP plugins
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);
 }
 
-const cardsData = [
-  {
-    title: "Reconocimiento Inteligente",
-    subtitle: "IA Avanzada",
-    description: "Algoritmos de machine learning que se adaptan a gestos únicos para una experiencia personalizada.",
-    icon: <Brain className="w-12 h-12" />,
-    gradient: "from-purple-500 via-pink-500 to-red-500",
-    badge: "IA",
-  },
-  {
-    title: "Respuesta Rápida",
-    subtitle: "Eficiente",
-    description: "Detección de gestos en tiempo real para una interacción fluida y natural.",
-    icon: <Zap className="w-12 h-12" />,
-    gradient: "from-yellow-400 via-orange-500 to-red-500",
-    badge: "Velocidad",
-  },
-  {
-    title: "Visión Computacional",
-    subtitle: "Precisión",
-    description: "Tecnología de visión computacional que detecta gestos con precisión del 80% en condiciones normales.",
-    icon: <Eye className="w-12 h-12" />,
-    gradient: "from-blue-500 via-cyan-500 to-teal-500",
-    badge: "Precisión",
-  },
-  {
-    title: "Control Natural",
-    subtitle: "Gestos Intuitivos",
-    description: "Interfaz que responde a movimientos naturales de la mano, haciendo la tecnología más humana y accesible.",
-    icon: <Hand className="w-12 h-12" />,
-    gradient: "from-green-400 via-blue-500 to-purple-600",
-    badge: "Natural",
-  },
+// Iconos para las tarjetas
+const cardIcons = [
+  <Brain className="w-12 h-12" />,
+  <Zap className="w-12 h-12" />,
+  <Eye className="w-12 h-12" />,
+  <Hand className="w-12 h-12" />
+];
+
+const cardGradients = [
+  "from-purple-500 via-pink-500 to-red-500",
+  "from-yellow-400 via-orange-500 to-red-500",
+  "from-blue-500 via-cyan-500 to-teal-500",
+  "from-green-400 via-blue-500 to-purple-600"
 ];
 
 export const Information = () => {
+  const { t } = useTranslation();
   const containerRef = useRef<HTMLDivElement>(null);
   const headerRef = useRef<HTMLDivElement>(null);
   const cardsContainerRef = useRef<HTMLDivElement>(null);
   const springRef = useRef<HTMLDivElement>(null);
   const starRef = useRef<HTMLDivElement>(null);
   const cylinderRef = useRef<HTMLDivElement>(null);
+
+  // Obtener datos de tarjetas traducidos
+  const cardsData = (t('information.cards', { returnObjects: true }) as Array<{
+    title: string;
+    subtitle: string;
+    description: string;
+    badge: string;
+  }>).map((card, index) => ({
+    ...card,
+    icon: cardIcons[index],
+    gradient: cardGradients[index]
+  }));
 
   // EFECTOS DE SCROLL OPTIMIZADOS CON GSAP
   useEffect(() => {
@@ -195,6 +189,7 @@ export const Information = () => {
     <section 
       ref={containerRef}
       className="bg-gradient-to-b from-[#FFFFFF] to-[#D2DCFF] py-20 overflow-hidden"
+      id="informacion"
     >
       <div className="container mx-auto px-4">
         {/* Header de la sección */}
@@ -203,13 +198,13 @@ export const Information = () => {
           className="max-w-[540px] mx-auto mb-16 opacity-0"
         >
           <div className="flex justify-center">
-            <div className="tag">Tecnología Avanzada</div>
+            <div className="tag">{t('information.sectionBadge')}</div>
           </div>
           <h2 className="text-center text-4xl md:text-[54px] md:leading-[60px] font-bold tracking-tighter bg-gradient-to-b from-black via-cyan-500 via-blue-500 to-teal-500 text-transparent bg-clip-text leading-tight pb-1 mt-5">
-            Las capacidades principales de GestOS
+            {t('information.sectionTitle')}
           </h2>
           <p className="text-center text-xl text-black/60 mt-6 tracking-tight">
-            Descubre las tecnologías que hacen posible una interacción natural e intuitiva.
+            {t('information.sectionSubtitle')}
           </p>
         </div>
 
@@ -220,10 +215,13 @@ export const Information = () => {
             ref={cardsContainerRef}
             className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-8 md:gap-6 xl:gap-4 justify-items-center opacity-0"
           >
-            <InteractiveCard {...cardsData[0]} delay={0.1} />
-            <InteractiveCard {...cardsData[1]} delay={0.2} />
-            <InteractiveCard {...cardsData[2]} delay={0.3} />
-            <InteractiveCard {...cardsData[3]} delay={0.4} />
+            {cardsData.map((card, index) => (
+              <InteractiveCard 
+                key={index}
+                {...card} 
+                delay={0.1 * (index + 1)} 
+              />
+            ))}
           </div>
 
           {/* Elementos decorativos optimizados */}

@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion'
 import { Info, AlertTriangle } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
 
 interface GestureDebugProps {
   videoRef: React.RefObject<HTMLVideoElement>
@@ -20,6 +21,8 @@ export const GestureDebug: React.FC<GestureDebugProps> = ({
   error,
   show = false
 }) => {
+  const { t } = useTranslation();
+  
   if (!show) return null
 
   const video = videoRef.current
@@ -44,7 +47,7 @@ export const GestureDebug: React.FC<GestureDebugProps> = ({
     >
       <div className="flex items-center gap-2 mb-2">
         <Info className="w-4 h-4 text-blue-400" />
-        <span className="text-blue-400 font-semibold">Debug Info</span>
+        <span className="text-blue-400 font-semibold">{t('productShowcase.gestureRecognition.debug.title')}</span>
       </div>
       
       <div className="space-y-1 mb-3">
@@ -62,12 +65,12 @@ export const GestureDebug: React.FC<GestureDebugProps> = ({
       <div className="border-t border-gray-600 pt-2">
         <div className="flex items-center gap-1 mb-1">
           <AlertTriangle className="w-3 h-3 text-yellow-400" />
-          <span className="text-yellow-400 text-[10px] font-semibold">Mensajes Normales</span>
+          <span className="text-yellow-400 text-[10px] font-semibold">{t('productShowcase.gestureRecognition.debug.normalMessages')}</span>
         </div>
         <div className="text-[10px] text-gray-400 space-y-1">
-          <div>• "TensorFlow Lite XNNPACK" = ✅ Optimización activa</div>
-          <div>• "message channel closed" = ⚠️ Extensión navegador</div>
-          <div>• "Created delegate for CPU" = ✅ Funcionamiento normal</div>
+          <div>• {t('productShowcase.gestureRecognition.debug.optimizationActive')}</div>
+          <div>• {t('productShowcase.gestureRecognition.debug.extensionWarning')}</div>
+          <div>• {t('productShowcase.gestureRecognition.debug.normalOperation')}</div>
         </div>
       </div>
     </motion.div>

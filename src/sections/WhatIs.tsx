@@ -31,6 +31,7 @@ import openPalmImage from "@/assets/hands/OpenPalm.png";
 import downImage from "@/assets/hands/Down.png";
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useTranslation } from 'react-i18next';
 
 // Registrar GSAP plugins
 if (typeof window !== 'undefined') {
@@ -39,6 +40,7 @@ if (typeof window !== 'undefined') {
 
 // Componente del Control Panel simplificado para demo
 const DemoControlPanel = () => {
+  const { t } = useTranslation();
   const [currentSet, setCurrentSet] = useState(0);
   const [isMinimized, setIsMinimized] = useState(true);
   const [isVisible, setIsVisible] = useState(false);
@@ -114,7 +116,7 @@ const DemoControlPanel = () => {
             transition={{ delay: 0.5 }}
           >
             <Eye className="w-4 h-4" />
-            Ver Demo de la Barra
+            {t('whatIs.demo.showButton')}
           </motion.button>
           <motion.p 
             className="text-xs text-gray-300 bg-black/20 backdrop-blur-sm px-3 py-1 rounded-lg border border-white/20 text-center"
@@ -122,7 +124,7 @@ const DemoControlPanel = () => {
             animate={{ opacity: 1 }}
             transition={{ delay: 0.7 }}
           >
-            👆 Demo interactiva
+            {t('whatIs.demo.demoIndicator')}
           </motion.p>
         </div>
       </div>
@@ -138,7 +140,7 @@ const DemoControlPanel = () => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.3 }}
       >
-        🎮 Demo - No funcional
+        {t('whatIs.demo.demoBanner')}
       </motion.div>
 
       {isMinimized ? (
@@ -271,6 +273,7 @@ const FunctionCard: React.FC<FunctionCardProps> = ({
 };
 
 export const WhatIs = () => {
+  const { t } = useTranslation();
   const containerRef = useRef<HTMLDivElement>(null);
   const headerRef = useRef<HTMLDivElement>(null);
   const tagRef = useRef<HTMLDivElement>(null);
@@ -292,26 +295,47 @@ export const WhatIs = () => {
   const openPalmRef = useRef<HTMLDivElement>(null);
   const downRef = useRef<HTMLDivElement>(null);
 
+  // Obtener datos traducidos
+  const howWorksFeatures = t('whatIs.howWorks.features', { returnObjects: true }) as Array<{
+    title: string;
+    description: string;
+  }>;
+
+  const sidebarCards = t('whatIs.sidebarFunctions.cards', { returnObjects: true }) as Array<{
+    title: string;
+    description: string;
+    gestures: Array<{ emoji: string; label: string }>;
+  }>;
+
+  const appWindows = t('whatIs.appWindows.windows', { returnObjects: true }) as Array<{
+    title: string;
+    subtitle: string;
+    description: string;
+    badges: string[];
+  }>;
+
+  const recognitionGestures = t('whatIs.sidebarFunctions.recognitionInfo.gestures', { returnObjects: true }) as string[];
+
   const features = [
     {
       icon: <Eye className="w-8 h-8" />,
-      title: "Visión por Computadora",
-      description: "Detecta y analiza gestos de manos en tiempo real usando algoritmos avanzados de visión por computadora"
+      title: howWorksFeatures[0]?.title || "Visión por Computadora",
+      description: howWorksFeatures[0]?.description || "Detecta y analiza gestos de manos en tiempo real usando algoritmos avanzados de visión por computadora"
     },
     {
       icon: <Brain className="w-8 h-8" />,
-      title: "Inteligencia Artificial", 
-      description: "Librerias de machine learning adaptadas a gestos únicos para una experiencia personalizada."  
+      title: howWorksFeatures[1]?.title || "Inteligencia Artificial", 
+      description: howWorksFeatures[1]?.description || "Librerías de machine learning adaptadas a gestos únicos para una experiencia personalizada."  
     },
     {
       icon: <Zap className="w-8 h-8" />,
-      title: "Respuesta Eficiente",
-      description: "Latencia baja para una experiencia fluida y natural."
+      title: howWorksFeatures[2]?.title || "Respuesta Eficiente",
+      description: howWorksFeatures[2]?.description || "Latencia baja para una experiencia fluida y natural."
     },
     {
       icon: <Hand className="w-8 h-8" />,
-      title: "Control Intuitivo",
-      description: "Gestos naturales que cualquier persona puede aprender y usar sin entrenamiento previo"
+      title: howWorksFeatures[3]?.title || "Control Intuitivo",
+      description: howWorksFeatures[3]?.description || "Gestos naturales que cualquier persona puede aprender y usar sin entrenamiento previo"
     }
   ];
 
@@ -684,6 +708,7 @@ export const WhatIs = () => {
     <section 
       ref={containerRef}
       className="bg-gradient-to-b from-[#D2DCFF] to-[#FFFFFF] pt-24 pb-10 overflow-hidden relative"
+      id="que-es"
     >
       <div className="container mx-auto px-4">
         {/* Header */}
@@ -692,19 +717,19 @@ export const WhatIs = () => {
           className="max-w-[640px] mx-auto mb-16 text-center"
         >
           <div className="flex justify-center mb-6">
-            <div ref={tagRef} className="tag">¿Qué es GestOS?</div>
+            <div ref={tagRef} className="tag">{t('whatIs.mainBadge')}</div>
           </div>
           <h2 
             ref={titleRef}
             className="text-4xl md:text-[54px] md:leading-[60px] font-bold tracking-tighter bg-gradient-to-b from-black via-cyan-500 via-blue-500 to-teal-500 text-transparent bg-clip-text leading-tight pb-1"
           >
-            Una barra lateral revolucionaria para controlar tu computadora
+            {t('whatIs.mainTitle')}
           </h2>
           <p 
             ref={descriptionRef}
             className="text-xl text-black/60 mt-6 tracking-tight"
           >
-            Es una innovadora aplicación que abre una barra lateral en tu escritorio para controlar tu computadora usando únicamente gestos de manos.
+            {t('whatIs.mainDescription')}
           </p>
         </div>
 
@@ -717,15 +742,13 @@ export const WhatIs = () => {
           >
             <div className="space-y-6">
               <h3 className="text-3xl font-bold text-gray-900">
-                El futuro de la interacción humano-computadora
+                {t('whatIs.mainContent.title')}
               </h3>
               <p className="text-lg text-gray-600 leading-relaxed">
-                GestOS es una aplicación que coloca una <strong>barra lateral inteligente</strong> en tu escritorio, 
-                permitiéndote controlar tu computadora usando solo gestos naturales de las manos.
+                {t('whatIs.mainContent.description1')}
               </p>
               <p className="text-lg text-gray-600 leading-relaxed">
-                Cada gesto que realizas es detectado por la cámara de tu dispositivo y procesado en tiempo real 
-                por algoritmos de <strong>visión por computadora</strong> e <strong>inteligencia artificial</strong>.
+                {t('whatIs.mainContent.description2')}
               </p>
             </div>
 
@@ -735,9 +758,9 @@ export const WhatIs = () => {
                   <Camera className="w-6 h-6 text-white" />
                 </div>
                 <div>
-                  <h4 className="font-semibold text-gray-900 mb-2">Sin hardware adicional</h4>
+                  <h4 className="font-semibold text-gray-900 mb-2">{t('whatIs.mainContent.noHardwareTitle')}</h4>
                   <p className="text-gray-600">
-                    Solo necesitas la cámara web de tu computadora. GestOS funciona con cualquier cámara estándar.
+                    {t('whatIs.mainContent.noHardwareDesc')}
                   </p>
                 </div>
               </div>
@@ -774,13 +797,13 @@ export const WhatIs = () => {
               ref={howWorksTitleRef}
               className="text-3xl md:text-4xl font-bold tracking-tighter bg-gradient-to-b from-black via-cyan-500 via-blue-500 to-teal-500 text-transparent bg-clip-text mb-4"
             >
-              ¿Cómo funciona?
+              {t('whatIs.howWorks.title')}
             </h3>
             <p 
               ref={howWorksDescRef}
               className="text-xl text-black/60 max-w-2xl mx-auto"
             >
-              Un proceso simple pero tecnológicamente avanzado que hace posible el control por gestos
+              {t('whatIs.howWorks.subtitle')}
             </p>
           </div>
 
@@ -812,186 +835,66 @@ export const WhatIs = () => {
             ref={functionsTitleRef}
             className="text-3xl md:text-4xl font-bold tracking-tighter bg-gradient-to-b from-black via-cyan-500 via-blue-500 to-teal-500 text-transparent bg-clip-text mb-6"
           >
-            Funciones de la Barra Lateral
+            {t('whatIs.sidebarFunctions.title')}
           </h3>
           <p 
             ref={functionsDescRef}
             className="text-xl text-black/60 max-w-3xl mx-auto mb-12"
           >
-            Cada icono en la barra lateral activa un módulo específico de reconocimiento de gestos para controlar diferentes aspectos de tu computadora
+            {t('whatIs.sidebarFunctions.subtitle')}
           </p>
           
           <div className="max-w-7xl mx-auto">
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
               {/* Fila 1: Gestos básicos */}
-              <FunctionCard
-                icon={Volume2}
-                title="Control de Volumen"
-                description="Ajusta el volumen del sistema con gestos naturales de la mano"
-                gradientFrom="from-blue-500"
-                gradientTo="to-purple-600"
-                gestures={[
-                  { emoji: "✋", label: "Subir" },
-                  { emoji: "👎", label: "Bajar" },
-                  { emoji: "✊", label: "Sonido" },
-                  { emoji: "✊", label: "Silenciar" }
-                ]}
-                badgeColor="text-blue-600 bg-blue-50"
-              />
-
-              <FunctionCard
-                icon={AppWindow}
-                title="Aplicaciones"
-                description="Abre y cierra aplicaciones con diferentes gestos"
-                gradientFrom="from-green-500"
-                gradientTo="to-teal-600"
-                gestures={[
-                  { emoji: "👆", label: "Chrome" },
-                  { emoji: "✌️", label: "Notas" },
-                  { emoji: "🤟", label: "Calculadora" },
-                  { emoji: "✋", label: "Spotify" }
-                ]}
-                badgeColor="text-green-600 bg-green-50"
-              />
-
-              <FunctionCard
-                icon={SquarePlay}
-                title="Multimedia"
-                description="Controla reproducción, pausa y avance de contenido multimedia"
-                gradientFrom="from-purple-500"
-                gradientTo="to-pink-600"
-                gestures={[
-                  { emoji: "🤟", label: "Pausar/Reproducir" },
-                  { emoji: "👍", label: "Adelantar" },
-                  { emoji: "👎", label: "Retroceder" }
-                ]}
-                badgeColor="text-purple-600 bg-purple-50"
-              />
-
-              <FunctionCard
-                icon={Monitor}
-                title="Sistema"
-                description="Apaga, reinicia, hiberna y suspende tu computadora"
-                gradientFrom="from-red-500"
-                gradientTo="to-orange-600"
-                gestures={[
-                  { emoji: "👍", label: "Apagar" },
-                  { emoji: "👎", label: "Reiniciar" },
-                  { emoji: "✋", label: "Suspender" },
-                  { emoji: "🤟", label: "Hibernar" }
-                ]}
-                badgeColor="text-red-600 bg-red-50"
-              />
+              {sidebarCards.slice(0, 4).map((card, index) => (
+                <FunctionCard
+                  key={index}
+                  icon={[Volume2, AppWindow, SquarePlay, Monitor][index]}
+                  title={card.title}
+                  description={card.description}
+                  gradientFrom={["from-blue-500", "from-green-500", "from-purple-500", "from-red-500"][index]}
+                  gradientTo={["to-purple-600", "to-teal-600", "to-pink-600", "to-orange-600"][index]}
+                  gestures={card.gestures}
+                  badgeColor={["text-blue-600 bg-blue-50", "text-green-600 bg-green-50", "text-purple-600 bg-purple-50", "text-red-600 bg-red-50"][index]}
+                />
+              ))}
             </div>
 
             {/* Fila 2: Gestos avanzados */}
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-              <FunctionCard
-                icon={Command}
-                title="Atajos"
-                description="Activa atajos comunes y comandos rápidos"
-                gradientFrom="from-amber-500"
-                gradientTo="to-yellow-600"
-                gestures={[
-                  { emoji: "👎", label: "Cortar" },
-                  { emoji: "👍", label: "Copiar" },
-                  { emoji: "✌️", label: "Pegar" },
-                  { emoji: "✋", label: "Deshacer" }
-                ]}
-                badgeColor="text-amber-600 bg-amber-50"
-              />
-
-              <FunctionCard
-                icon={Mouse}
-                title="Mouse Virtual"
-                description="Controla el cursor, clic y arrastre usando movimientos de mano"
-                gradientFrom="from-indigo-500"
-                gradientTo="to-blue-600"
-                gestures={[
-                  { emoji: "👆", label: "Mover" },
-                  { emoji: "👆", label: "Clic Izq" },
-                  { emoji: "👆", label: "Clic Der" }
-                ]}
-                badgeColor="text-indigo-600 bg-indigo-50"
-              />
-
-              <FunctionCard
-                icon={Compass}
-                title="Navegación"
-                description="Cambia entre ventanas y espacios de trabajo fluidamente"
-                gradientFrom="from-cyan-500"
-                gradientTo="to-blue-500"
-                gestures={[
-                  { emoji: "🤟", label: "Alt+Tab" },
-                  { emoji: "👆", label: "Escritorio" },
-                  { emoji: "✌️", label: "Vista Tarea" },
-                  { emoji: "✋", label: "Win+D" }
-                ]}
-                badgeColor="text-cyan-600 bg-cyan-50"
-              />
-
-              <FunctionCard
-                icon={House}
-                title="Inicio"
-                description="Acceso rápido al menú principal y funciones esenciales"
-                gradientFrom="from-pink-500"
-                gradientTo="to-rose-600"
-                gestures={[
-                  { emoji: "-", label: "Click" }
-                ]}
-                badgeColor="text-pink-600 bg-pink-50"
-              />
+              {sidebarCards.slice(4, 8).map((card, index) => (
+                <FunctionCard
+                  key={index + 4}
+                  icon={[Command, Mouse, Compass, House][index]}
+                  title={card.title}
+                  description={card.description}
+                  gradientFrom={["from-amber-500", "from-indigo-500", "from-cyan-500", "from-pink-500"][index]}
+                  gradientTo={["to-yellow-600", "to-blue-600", "to-blue-500", "to-rose-600"][index]}
+                  gestures={card.gestures}
+                  badgeColor={["text-amber-600 bg-amber-50", "text-indigo-600 bg-indigo-50", "text-cyan-600 bg-cyan-50", "text-pink-600 bg-pink-50"][index]}
+                />
+              ))}
             </div>
 
             {/* Nota informativa */}
             <div className="mt-8 bg-gradient-to-r from-blue-50 to-cyan-50 rounded-2xl p-4 md:p-6 border border-blue-100">
               <div className="text-center">
-                <h4 className="font-semibold text-gray-900 mb-3 text-lg md:text-xl">Sistema de Reconocimiento Avanzado</h4>
+                <h4 className="font-semibold text-gray-900 mb-3 text-lg md:text-xl">{t('whatIs.sidebarFunctions.recognitionInfo.title')}</h4>
                 <p className="text-gray-600 text-sm md:text-base leading-relaxed max-w-4xl mx-auto">
-                  GestOS utiliza un <a 
-                    href="https://ai.google.dev/edge/mediapipe/solutions/vision/gesture_recognizer?hl=es-419" 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className="text-blue-600 hover:text-blue-700 font-semibold underline decoration-2 underline-offset-2 hover:decoration-blue-700 transition-colors duration-200"
-                  >
-                    modelo
-                  </a> de inteligencia artificial entrenado para reconocer <strong>8 gestos principales</strong>: 
-                  None, Closed_Fist, Open_Palm, Pointing_Up, Thumb_Down, Thumb_Up, Victory e ILoveYou. 
-                  <strong> Cada función combina múltiples gestos</strong> para ofrecer control completo y preciso.
+                  {t('whatIs.sidebarFunctions.recognitionInfo.description')}
                 </p>
                 <div className="grid grid-cols-4 md:flex md:justify-center gap-2 md:gap-4 mt-6 max-w-xs md:max-w-none mx-auto">
-                  <div className="flex flex-col items-center gap-1">
-                    <span className="text-xl md:text-2xl" title="None">🤚</span>
-                    <span className="text-xs text-gray-500 hidden md:block">None</span>
-                  </div>
-                  <div className="flex flex-col items-center gap-1">
-                    <span className="text-xl md:text-2xl" title="Closed_Fist">✊</span>
-                    <span className="text-xs text-gray-500 hidden md:block">Fist</span>
-                  </div>
-                  <div className="flex flex-col items-center gap-1">
-                    <span className="text-xl md:text-2xl" title="Open_Palm">✋</span>
-                    <span className="text-xs text-gray-500 hidden md:block">Palm</span>
-                  </div>
-                  <div className="flex flex-col items-center gap-1">
-                    <span className="text-xl md:text-2xl" title="Pointing_Up">👆</span>
-                    <span className="text-xs text-gray-500 hidden md:block">Point</span>
-                  </div>
-                  <div className="flex flex-col items-center gap-1">
-                    <span className="text-xl md:text-2xl" title="Thumb_Down">👎</span>
-                    <span className="text-xs text-gray-500 hidden md:block">Down</span>
-                  </div>
-                  <div className="flex flex-col items-center gap-1">
-                    <span className="text-xl md:text-2xl" title="Thumb_Up">👍</span>
-                    <span className="text-xs text-gray-500 hidden md:block">Up</span>
-                  </div>
-                  <div className="flex flex-col items-center gap-1">
-                    <span className="text-xl md:text-2xl" title="Victory">✌️</span>
-                    <span className="text-xs text-gray-500 hidden md:block">Victory</span>
-                  </div>
-                  <div className="flex flex-col items-center gap-1">
-                    <span className="text-xl md:text-2xl" title="ILoveYou">🤟</span>
-                    <span className="text-xs text-gray-500 hidden md:block">Love</span>
-                  </div>
+                  {recognitionGestures.map((gestureLabel, index) => {
+                    const gestureEmojis = ["🤚", "✊", "✋", "👆", "👎", "👍", "✌️", "🤟"];
+                    const gestureTitles = ["None", "Closed_Fist", "Open_Palm", "Pointing_Up", "Thumb_Down", "Thumb_Up", "Victory", "ILoveYou"];
+                    return (
+                      <div key={index} className="flex flex-col items-center gap-1">
+                        <span className="text-xl md:text-2xl" title={gestureTitles[index]}>{gestureEmojis[index]}</span>
+                        <span className="text-xs text-gray-500 hidden md:block">{gestureLabel}</span>
+                      </div>
+                    );
+                  })}
                 </div>
               </div>
             </div>
@@ -1002,12 +905,12 @@ export const WhatIs = () => {
         <div className="mt-32 mb-20">
           <div className="text-center mb-16">
             <h3 className="text-3xl md:text-4xl font-bold tracking-tighter bg-gradient-to-b from-black via-cyan-500 via-blue-500 to-teal-500 text-transparent bg-clip-text mb-6">
-              Ventanas de la Aplicación
+              {t('whatIs.appWindows.title')}
             </h3>
             <p className="text-xl text-black/60 max-w-3xl mx-auto">
-              GestOS incluye múltiples ventanas especializadas para una experiencia completa de control gestual
+              {t('whatIs.appWindows.subtitle')}
             </p>
-      </div>
+          </div>
 
           <div className="max-w-7xl mx-auto space-y-16">
             {/* Gesture Testing - Ventana Principal */}
@@ -1018,19 +921,17 @@ export const WhatIs = () => {
                     <Hand className="w-8 h-8 text-white" />
                   </div>
                   <div>
-                    <h4 className="text-2xl font-bold text-gray-900">Gesture Testing</h4>
-                    <p className="text-cyan-600 font-medium">Ventana Principal</p>
+                    <h4 className="text-2xl font-bold text-gray-900">{appWindows[0]?.title}</h4>
+                    <p className="text-cyan-600 font-medium">{appWindows[0]?.subtitle}</p>
                   </div>
                 </div>
                 <p className="text-lg text-gray-600">
-                  El centro de control donde ocurre toda la magia. Incluye reconocimiento gestual en tiempo real, 
-                  juegos interactivos como <strong>Piedra, Papel o Tijeras</strong> y <strong>Simon Says</strong>, 
-                  y diferentes modos de interacción exclusivos.
+                  {appWindows[0]?.description}
                 </p>
                 <div className="flex flex-wrap gap-2">
-                  <span className="bg-cyan-50 text-cyan-700 px-3 py-1 rounded-full text-sm font-medium">🎮 Juegos</span>
-                  <span className="bg-blue-50 text-blue-700 px-3 py-1 rounded-full text-sm font-medium">👋 Reconocimiento</span>
-                  <span className="bg-purple-50 text-purple-700 px-3 py-1 rounded-full text-sm font-medium">🎯 Interacciones</span>
+                  {appWindows[0]?.badges.map((badge, index) => (
+                    <span key={index} className="bg-cyan-50 text-cyan-700 px-3 py-1 rounded-full text-sm font-medium">{badge}</span>
+                  ))}
                 </div>
               </div>
               <div className="bg-gray-100 rounded-2xl p-8 text-center">
@@ -1051,18 +952,17 @@ export const WhatIs = () => {
                     <Brain className="w-8 h-8 text-white" />
                   </div>
                   <div>
-                    <h4 className="text-2xl font-bold text-gray-900">Info Gestures</h4>
-                    <p className="text-green-600 font-medium">Catálogo de Gestos</p>
+                    <h4 className="text-2xl font-bold text-gray-900">{appWindows[1]?.title}</h4>
+                    <p className="text-green-600 font-medium">{appWindows[1]?.subtitle}</p>
                   </div>
                 </div>
                 <p className="text-lg text-gray-600">
-                  Una guía completa e interactiva con todos los gestos disponibles. Navegación por páginas, 
-                  información detallada de cada gesto, instrucciones de uso y consejos para mejor reconocimiento.
+                  {appWindows[1]?.description}
                 </p>
                 <div className="flex flex-wrap gap-2">
-                  <span className="bg-green-50 text-green-700 px-3 py-1 rounded-full text-sm font-medium">📚 Catálogo</span>
-                  <span className="bg-teal-50 text-teal-700 px-3 py-1 rounded-full text-sm font-medium">💡 Consejos</span>
-                  <span className="bg-emerald-50 text-emerald-700 px-3 py-1 rounded-full text-sm font-medium">📖 Instrucciones</span>
+                  {appWindows[1]?.badges.map((badge, index) => (
+                    <span key={index} className="bg-green-50 text-green-700 px-3 py-1 rounded-full text-sm font-medium">{badge}</span>
+                  ))}
                 </div>
               </div>
             </div>
@@ -1075,18 +975,17 @@ export const WhatIs = () => {
                     <Monitor className="w-8 h-8 text-white" />
                   </div>
                   <div>
-                    <h4 className="text-2xl font-bold text-gray-900">Settings</h4>
-                    <p className="text-purple-600 font-medium">Configuración General</p>
+                    <h4 className="text-2xl font-bold text-gray-900">{appWindows[2]?.title}</h4>
+                    <p className="text-purple-600 font-medium">{appWindows[2]?.subtitle}</p>
                   </div>
                 </div>
                 <p className="text-lg text-gray-600">
-                  Centro de personalización completo. Configuración de idioma (Español/Inglés), accesibilidad 
-                  (tamaño de texto, alto contraste), tamaño de ventana y guardado automático de preferencias.
+                  {appWindows[2]?.description}
                 </p>
                 <div className="flex flex-wrap gap-2">
-                  <span className="bg-purple-50 text-purple-700 px-3 py-1 rounded-full text-sm font-medium">🌍 Idioma</span>
-                  <span className="bg-pink-50 text-pink-700 px-3 py-1 rounded-full text-sm font-medium">👁️ Accesibilidad</span>
-                  <span className="bg-violet-50 text-violet-700 px-3 py-1 rounded-full text-sm font-medium">💾 Guardado</span>
+                  {appWindows[2]?.badges.map((badge, index) => (
+                    <span key={index} className="bg-purple-50 text-purple-700 px-3 py-1 rounded-full text-sm font-medium">{badge}</span>
+                  ))}
                 </div>
               </div>
               <div className="bg-gray-100 rounded-2xl p-8 text-center">
@@ -1107,18 +1006,17 @@ export const WhatIs = () => {
                     <Eye className="w-8 h-8 text-white" />
                   </div>
                   <div>
-                    <h4 className="text-2xl font-bold text-gray-900">Help & Support</h4>
-                    <p className="text-amber-600 font-medium">Ayuda y Soporte</p>
+                    <h4 className="text-2xl font-bold text-gray-900">{appWindows[3]?.title}</h4>
+                    <p className="text-amber-600 font-medium">{appWindows[3]?.subtitle}</p>
                   </div>
                 </div>
                 <p className="text-lg text-gray-600">
-                  Centro de ayuda completo con formulario de contacto inteligente, FAQ interactivas, 
-                  enlaces a repositorios del proyecto y encuesta de usabilidad integrada.
+                  {appWindows[3]?.description}
                 </p>
                 <div className="flex flex-wrap gap-2">
-                  <span className="bg-amber-50 text-amber-700 px-3 py-1 rounded-full text-sm font-medium">📧 Contacto</span>
-                  <span className="bg-orange-50 text-orange-700 px-3 py-1 rounded-full text-sm font-medium">❓ FAQ</span>
-                  <span className="bg-yellow-50 text-yellow-700 px-3 py-1 rounded-full text-sm font-medium">📋 Encuesta</span>
+                  {appWindows[3]?.badges.map((badge, index) => (
+                    <span key={index} className="bg-amber-50 text-amber-700 px-3 py-1 rounded-full text-sm font-medium">{badge}</span>
+                  ))}
                 </div>
               </div>
             </div>
@@ -1127,17 +1025,16 @@ export const WhatIs = () => {
           {/* Nota final */}
           <div className="mt-16 bg-gradient-to-r from-gray-50 to-slate-50 rounded-2xl p-6 border border-gray-200">
             <div className="text-center">
-              <h4 className="font-semibold text-gray-900 mb-3 text-lg">Experiencia Completa e Integrada</h4>
+              <h4 className="font-semibold text-gray-900 mb-3 text-lg">{t('whatIs.appWindows.finalNote.title')}</h4>
               <p className="text-gray-600 leading-relaxed max-w-4xl mx-auto">
-                Cada ventana está diseñada para complementar las demás, ofreciendo una experiencia de usuario fluida 
-                y completa. Desde el aprendizaje inicial hasta el uso avanzado, GestOS te acompaña en cada paso.
+                {t('whatIs.appWindows.finalNote.description')}
               </p>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Elementos decorativos optimizados - existentes */}
+        {/* Elementos decorativos optimizados - existentes */}
       <div
         ref={pyramidRef}
         className="hidden lg:block absolute -left-32 top-16 will-change-transform"

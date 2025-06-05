@@ -6,6 +6,7 @@ import Image from "next/image";
 import { useRef, useEffect } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useTranslation } from 'react-i18next';
 
 // Registrar GSAP plugins
 if (typeof window !== 'undefined') {
@@ -13,6 +14,7 @@ if (typeof window !== 'undefined') {
 }
 
 export const CallToAction = () => {
+  const { t } = useTranslation();
   const sectionRef = useRef<HTMLElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
@@ -203,14 +205,17 @@ export const CallToAction = () => {
   }, []);
 
   return (
-    <section ref={sectionRef} className="py-20 bg-gradient-to-b from-[#FFFFFF] to-[#D2DCFF] overflow-x-clip">
+    <section ref={sectionRef} className="py-20 bg-gradient-to-b from-[#FFFFFF] to-[#D2DCFF] overflow-x-clip" id="call-to-action">
       <div className="container">   
         <div ref={contentRef} className="flex flex-col items-center relative">
           <h2 ref={titleRef} className="text-center text-4xl font-bold tracking-tighter bg-gradient-to-b from-black via-cyan-500 via-blue-500 to-teal-500 text-transparent bg-clip-text leading-tight pb-1 mt-5">
-            Ahora es el momento de unirte a nosotros
+            {t('callToAction.title')}
           </h2>
+          <p className="text-center text-sm text-black/60 mt-2 font-medium">
+            {t('callToAction.subtitle')}
+          </p>
           <p ref={descriptionRef} className="text-center text-xl text-black/60 mt-6 tracking-tight">
-            Si quieres apoyar a nuestro proyecto, puedes descargar el prototipo de la aplicación.
+            {t('callToAction.description')}
           </p>
           <div
             ref={starRef}
@@ -253,7 +258,7 @@ export const CallToAction = () => {
         </div>
         <div ref={buttonsRef} className="flex justify-center gap-2 mt-10">
           <button className="btn btn-primary">
-            Descarga GestOS
+            {t('callToAction.primaryButton')}
           </button>
         </div>   
       </div>   

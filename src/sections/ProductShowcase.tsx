@@ -9,6 +9,7 @@ import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { GestureRecognition, GestureRecognitionRef } from '@/components/GestureRecognition'
 import { VideoGestureControl, VideoGestureControlRef } from '@/components/VideoGestureControl'
+import { useTranslation } from 'react-i18next'
 
 // Registrar GSAP plugins
 if (typeof window !== 'undefined') {
@@ -38,6 +39,8 @@ const DemoDockIcon: React.FC<DemoDockIconProps> = ({
   loading,
   color = 'blue'
 }) => {
+  const { t } = useTranslation();
+  
   const colorClasses = {
     blue: active 
       ? 'bg-gradient-to-r from-blue-500 to-blue-600 text-white shadow-blue-500/25' 
@@ -69,14 +72,14 @@ const DemoDockIcon: React.FC<DemoDockIconProps> = ({
             {title}
           </h3>
           <p className="text-sm opacity-75">
-            {loading ? 'Inicializando...' : description}
+            {loading ? t('productShowcase.demos.gesture.loading') : description}
           </p>
         </div>
       </div>
       
       {!loading && (
         <div className="text-xs opacity-60 text-center">
-          {active ? 'Activo • Click para desactivar' : 'Click para activar'}
+          {active ? t('productShowcase.states.active') : t('productShowcase.states.clickToActivate')}
         </div>
       )}
     </motion.button>
@@ -97,22 +100,30 @@ const MultiDemoPanel: React.FC<MultiDemoProps> = ({
   gestureLoading,
   videoLoading
 }) => {
+  const { t } = useTranslation();
+  
   const demos = [
     {
       id: 'gesture' as DemoOption,
       icon: Hand,
-      title: 'Reconocimiento de Gestos',
-      description: 'Detecta y reconoce 8 gestos diferentes en tiempo real',
+      title: t('productShowcase.demos.gesture.title'),
+      description: t('productShowcase.demos.gesture.description'),
       color: 'blue'
     },
     {
       id: 'video' as DemoOption,
       icon: Play,
-      title: 'Control de Video',
-      description: 'Controla videos de YouTube con gestos de mano',
+      title: t('productShowcase.demos.video.title'),
+      description: t('productShowcase.demos.video.description'),
       color: 'purple'
     }
-  ]
+  ];
+
+  const gestureList = t('productShowcase.demos.gesture.gestureList', { returnObjects: true }) as string[];
+  const videoControls = t('productShowcase.demos.video.controls', { returnObjects: true }) as Array<{
+    gesture: string;
+    action: string;
+  }>;
 
   return (
     <div className="w-full max-w-5xl mx-auto px-4">
@@ -125,10 +136,10 @@ const MultiDemoPanel: React.FC<MultiDemoProps> = ({
         {/* Header */}
         <div className="text-center mb-6">
           <h3 className="text-xl font-bold text-gray-800 mb-2">
-            Experimenta con Nuestras Demostraciones Interactivas
+            {t('productShowcase.demoPanel.title')}
           </h3>
           <p className="text-gray-600 text-sm mb-3">
-            Elige una opción para probar diferentes formas de interactuar con tecnología mediante gestos
+            {t('productShowcase.demoPanel.subtitle')}
           </p>
           
           {/* Aviso de rendimiento */}
@@ -137,11 +148,10 @@ const MultiDemoPanel: React.FC<MultiDemoProps> = ({
               <svg className="w-4 h-4 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z" />
               </svg>
-              <span className="text-amber-800 font-medium">Aviso de Rendimiento</span>
+              <span className="text-amber-800 font-medium">{t('productShowcase.demoPanel.performanceWarning.title')}</span>
             </div>
             <p className="text-amber-700">
-              Al activar el reconocimiento de gestos, la página puede experimentar una ligera disminución en el rendimiento 
-              debido al procesamiento de video en tiempo real. Esto es normal y temporal.
+              {t('productShowcase.demoPanel.performanceWarning.description')}
             </p>
           </div>
         </div>
@@ -186,16 +196,15 @@ const MultiDemoPanel: React.FC<MultiDemoProps> = ({
                       activeDemo === 'gesture' ? 'text-blue-800' : 'text-purple-800'
                     }`}>
                       {activeDemo === 'gesture' 
-                        ? 'Reconocimiento de Gestos Activo' 
-                        : 'Control de Video Activo'
+                        ? t('productShowcase.demos.gesture.activeStatus')
+                        : t('productShowcase.demos.video.activeStatus')
                       }
                     </span>
                   </div>
                   
                   {activeDemo === 'gesture' ? (
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-2 text-xs text-gray-700 mb-3">
-                      {['✋ Palma Abierta', '✊ Puño Cerrado', '👍 Pulgar Arriba', '👎 Pulgar Abajo', 
-                        '☝️ Apuntando', '✌️ Victoria', '🤟 Te Amo', '🫳 Ninguno'].map((gesture) => (
+                      {gestureList.map((gesture) => (
                         <div key={gesture} className="bg-white/60 rounded-lg p-2">
                           <span className="font-medium">{gesture}</span>
                         </div>
@@ -203,25 +212,23 @@ const MultiDemoPanel: React.FC<MultiDemoProps> = ({
                     </div>
                   ) : (
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-2 text-xs text-gray-700 mb-3">
-                      <div className="bg-white/60 rounded-lg p-2 flex items-center gap-2">
-                        <span className="text-green-500">👍</span>
-                        <span className="font-medium">Adelantar 10s</span>
-                      </div>
-                      <div className="bg-white/60 rounded-lg p-2 flex items-center gap-2">
-                        <span className="text-red-500">👎</span>
-                        <span className="font-medium">Retroceder 10s</span>
-                      </div>
-                      <div className="bg-white/60 rounded-lg p-2 flex items-center gap-2">
-                        <span className="text-blue-500">🤟</span>
-                        <span className="font-medium">Pausar/Reproducir</span>
-                      </div>
+                      {videoControls.map((control, index) => (
+                        <div key={index} className="bg-white/60 rounded-lg p-2 flex items-center gap-2">
+                          <span className={`${
+                            control.gesture === '👍' ? 'text-green-500' :
+                            control.gesture === '👎' ? 'text-red-500' :
+                            'text-blue-500'
+                          }`}>{control.gesture}</span>
+                          <span className="font-medium">{control.action}</span>
+                        </div>
+                      ))}
                     </div>
                   )}
 
                   <p className="text-xs text-gray-600">
                     {activeDemo === 'gesture' 
-                      ? 'Muestra cualquiera de estos gestos frente a la cámara y verás el reconocimiento en tiempo real.'
-                      : 'Controla el video de YouTube usando los gestos indicados. La cámara detectará tus movimientos automáticamente.'
+                      ? t('productShowcase.demos.gesture.instructions')
+                      : t('productShowcase.demos.video.instructions')
                     }
                   </p>
                 </div>
@@ -236,6 +243,7 @@ const MultiDemoPanel: React.FC<MultiDemoProps> = ({
 
 // Componente principal del ProductShowcase actualizado
 export const ProductShowcase = () => {
+  const { t } = useTranslation();
   const sectionRef = useRef<HTMLElement>(null)
   const tagRef = useRef<HTMLDivElement>(null)
   const titleRef = useRef<HTMLHeadingElement>(null)
@@ -479,23 +487,23 @@ export const ProductShowcase = () => {
   }, []);
 
   return (
-    <section ref={sectionRef} className="bg-gradient-to-b from-[#FFFFFF] to-[#D2DCFF] py-24 overflow-x-clip">
+    <section ref={sectionRef} className="bg-gradient-to-b from-[#FFFFFF] to-[#D2DCFF] py-24 overflow-x-clip" id="demo">
       <div className="container">
         <div className="max-w-[540px] mx-auto"> 
           <div className="flex justify-center">
-            <div ref={tagRef} className="tag">Experimenta la Innovación</div>
+            <div ref={tagRef} className="tag">{t('productShowcase.badge')}</div>
           </div>
           <h2 
             ref={titleRef}
             className="text-center text-4xl md:text-[54px] md:leading-[60px] font-bold tracking-tighter bg-gradient-to-b from-black via-cyan-500 via-blue-500 to-teal-500 text-transparent bg-clip-text leading-tight pb-1 mt-5"
           >
-            Interacción natural con tecnología avanzada
+            {t('productShowcase.title')}
           </h2>
           <p 
             ref={descriptionRef}
             className="text-center text-xl text-black/60 mt-6 tracking-tight"
           >
-            Descubre cómo GestOS revoluciona la forma en que interactuamos con la tecnología, ofreciendo control intuitivo mediante gestos naturales.
+            {t('productShowcase.description')}
           </p>
         </div>
         
@@ -545,8 +553,8 @@ export const ProductShowcase = () => {
                 >
                   <div className="text-center text-gray-500">
                     <Hand className="w-16 h-16 mx-auto mb-4 opacity-50" />
-                    <h3 className="text-xl font-semibold mb-2">Selecciona una Demostración</h3>
-                    <p className="text-sm">Elige una opción del panel inferior para comenzar</p>
+                    <h3 className="text-xl font-semibold mb-2">{t('productShowcase.states.inactive')}</h3>
+                    <p className="text-sm">{t('productShowcase.states.inactiveSubtitle')}</p>
                   </div>
                 </motion.div>
               )}

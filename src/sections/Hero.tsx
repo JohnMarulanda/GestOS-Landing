@@ -8,30 +8,16 @@ import { useState, useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { motion } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 
 // Registrar plugins
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);
 }
 
-// Mover textVariations fuera del componente para evitar recreación en cada render
-const textVariations = [
-  {
-    title: "Interacción natural. Tecnología real.",
-    subtitle: "Reconocimiento de gestos en tiempo real para experiencias más humanas entre tú y la máquina."
-  },
-  {
-    title: "El futuro de la interacción es sin contacto.",
-    subtitle: "GestOS transforma tus movimientos en comandos precisos."
-  },
-  {
-    title: "Controla tu mundo con un gesto.",
-    subtitle: "Desde el movimiento de tu mano hasta la acción en pantalla, todo en tiempo real."
-  }
-];
-
 // Componente de Scroll Indicator
 const ScrollIndicator = () => {
+  const { t } = useTranslation();
   const indicatorRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -80,7 +66,7 @@ const ScrollIndicator = () => {
         window.scrollTo({ top: window.innerHeight, behavior: 'smooth' });
       }}
     >
-      <span className="text-sm font-medium tracking-wide">Scroll para explorar</span>
+      <span className="text-sm font-medium tracking-wide">{t('hero.scrollIndicator')}</span>
       <div className="w-6 h-10 border-2 border-white/40 rounded-full relative">
         <div className="w-1 h-3 bg-white/60 rounded-full absolute top-2 left-1/2 transform -translate-x-1/2 animate-scroll-dot"></div>
       </div>
@@ -97,6 +83,7 @@ const ScrollIndicator = () => {
 };
 
 export const Hero = () => {
+  const { t } = useTranslation();
   const [currentTextIndex, setCurrentTextIndex] = useState(0);
   const heroRef = useRef<HTMLElement>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
@@ -108,6 +95,12 @@ export const Hero = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const textContainerRef = useRef<HTMLDivElement>(null);
 
+  // Obtener las variaciones de texto traducidas
+  const textVariations = t('hero.textVariations', { returnObjects: true }) as Array<{
+    title: string;
+    subtitle: string;
+  }>;
+
   // Estado para mostrar contenido inicial inmediatamente
   const [displayText, setDisplayText] = useState(textVariations[0]);
 
@@ -118,12 +111,12 @@ export const Hero = () => {
     }, 4000);
 
     return () => clearInterval(interval);
-  }, []); // Dependencias vacías - solo se ejecuta una vez
+  }, [textVariations.length]); // Ahora depende de la longitud del array de traducciones
 
   // Actualizar el texto mostrado cuando cambia el índice
   useEffect(() => {
     setDisplayText(textVariations[currentTextIndex]);
-  }, [currentTextIndex]); // Solo depende de currentTextIndex
+  }, [currentTextIndex, textVariations]); // Incluir textVariations en las dependencias
 
   // ANIMACIONES PRINCIPALES (SE EJECUTAN UNA SOLA VEZ AL CARGAR)
   useEffect(() => {
@@ -314,7 +307,7 @@ export const Hero = () => {
       <div className="container" ref={containerRef}>
         <div className="md:flex items-center">
           <div className="md:w-[478px]" ref={textContainerRef}>
-            <div className="tag hero-tag mb-4">GestOS Version 1.0</div>
+            <div className="tag hero-tag mb-4">{t('hero.tag')}</div>
             
             <h1 
               ref={titleRef}
@@ -344,7 +337,7 @@ export const Hero = () => {
                   alert('¡Botón Descargar funcionando!');
                 }}
               >
-                Descargar
+                {t('hero.buttons.getAccess')}
               </button>
 
               {/* Botones de repositorios */}

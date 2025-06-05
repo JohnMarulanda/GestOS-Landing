@@ -3,6 +3,7 @@ import { forwardRef, useEffect, useImperativeHandle, useRef, useState, useCallba
 import { Hand, Loader2, Eye, AlertCircle, Bug, Zap } from 'lucide-react'
 import { useGestureRecognizer, GestureResult, FingerState } from '@/hooks/useGestureRecognizer'
 import { GestureDebug } from './GestureDebug'
+import { useTranslation } from 'react-i18next'
 
 export interface GestureRecognitionRef {
   startCamera: () => Promise<void>
@@ -22,6 +23,8 @@ interface GestureDisplayProps {
 }
 
 const GestureDisplay: React.FC<GestureDisplayProps> = ({ gesture, isRecognizing }) => {
+  const { t } = useTranslation();
+  
   return (
     <AnimatePresence>
       {isRecognizing && (
@@ -35,7 +38,7 @@ const GestureDisplay: React.FC<GestureDisplayProps> = ({ gesture, isRecognizing 
           <div className="bg-black/70 backdrop-blur-md rounded-xl p-4 text-white min-w-[200px]">
             <div className="flex items-center gap-2 mb-2">
               <Eye className="w-4 h-4 text-green-400" />
-              <span className="text-sm font-medium text-green-400">Reconociendo Gestos</span>
+              <span className="text-sm font-medium text-green-400">{t('productShowcase.states.recognizing')}</span>
             </div>
             
             {gesture ? (
@@ -49,15 +52,15 @@ const GestureDisplay: React.FC<GestureDisplayProps> = ({ gesture, isRecognizing 
                   {gesture.gesture}
                 </div>
                 <div className="text-xs text-gray-300">
-                  Confianza: {gesture.confidence}%
+                  {t('productShowcase.gestureRecognition.confidence')}: {gesture.confidence}%
                 </div>
                 <div className="text-xs text-gray-400">
-                  Mano: {gesture.handedness}
+                  {t('productShowcase.gestureRecognition.hand')}: {gesture.handedness}
                 </div>
               </motion.div>
             ) : (
               <div className="text-sm text-gray-400">
-                Muestra un gesto con tu mano...
+                {t('productShowcase.gestureRecognition.showGesture')}
               </div>
             )}
           </div>
@@ -75,8 +78,9 @@ interface FingerDisplayProps {
 }
 
 const FingerDisplay: React.FC<FingerDisplayProps> = ({ fingers, isRecognizing, showFingers }) => {
+  const { t } = useTranslation();
   const fingerNames = ['👍', '☝️', '🖕', '💍', '🤙']
-  const fingerLabels = ['Pulgar', 'Índice', 'Medio', 'Anular', 'Meñique']
+  const fingerLabels = t('productShowcase.gestureRecognition.debug.fingerNames', { returnObjects: true }) as string[]
   
   return (
     <AnimatePresence>
@@ -91,7 +95,7 @@ const FingerDisplay: React.FC<FingerDisplayProps> = ({ fingers, isRecognizing, s
           <div className="bg-black/80 backdrop-blur-md rounded-xl p-3 text-white min-w-[180px]">
             <div className="flex items-center gap-2 mb-2">
               <Zap className="w-4 h-4 text-yellow-400" />
-              <span className="text-xs font-medium text-yellow-400">Estado de Dedos</span>
+              <span className="text-xs font-medium text-yellow-400">{t('productShowcase.gestureRecognition.debug.fingerStates')}</span>
             </div>
             
             {fingers ? (
@@ -110,13 +114,13 @@ const FingerDisplay: React.FC<FingerDisplayProps> = ({ fingers, isRecognizing, s
                 
                 <div className="mt-2 pt-2 border-t border-gray-600">
                   <div className="text-[10px] text-gray-400 text-center">
-                    Debug de detección de dedos
+                    {t('productShowcase.gestureRecognition.debug.debugMessage')}
                   </div>
                 </div>
               </div>
             ) : (
               <div className="text-xs text-gray-400">
-                No se detectan dedos...
+                {t('productShowcase.gestureRecognition.debug.noFingers')}
               </div>
             )}
           </div>
@@ -133,6 +137,8 @@ interface EasterEggNotificationProps {
 }
 
 const EasterEggNotification: React.FC<EasterEggNotificationProps> = ({ show, onClose }) => {
+  const { t } = useTranslation();
+  
   useEffect(() => {
     if (show) {
       const timer = setTimeout(onClose, 5000)
@@ -157,12 +163,12 @@ const EasterEggNotification: React.FC<EasterEggNotificationProps> = ({ show, onC
             transition={{ type: 'spring', stiffness: 400, damping: 25 }}
           >
             <div className="text-4xl mb-3">😠</div>
-            <h3 className="text-xl font-bold mb-2">¡Ey, no seas irrespetuoso!</h3>
+            <h3 className="text-xl font-bold mb-2">{t('productShowcase.gestureRecognition.easterEgg.title')}</h3>
             <p className="text-sm opacity-90 mb-3">
-              Ese gesto no es apropiado 🤭
+              {t('productShowcase.gestureRecognition.easterEgg.subtitle')}
             </p>
             <p className="text-xs opacity-75">
-              Mejor usa los otros gestos disponibles 😊
+              {t('productShowcase.gestureRecognition.easterEgg.message')}
             </p>
           </motion.div>
         </motion.div>
@@ -173,6 +179,7 @@ const EasterEggNotification: React.FC<EasterEggNotificationProps> = ({ show, onC
 
 export const GestureRecognition = forwardRef<GestureRecognitionRef, GestureRecognitionProps>(
   ({ isActive, onToggle }, ref) => {
+    const { t } = useTranslation();
     const videoRef = useRef<HTMLVideoElement>(null)
     const canvasRef = useRef<HTMLCanvasElement>(null)
     const [isStreaming, setIsStreaming] = useState(false)
@@ -281,11 +288,11 @@ export const GestureRecognition = forwardRef<GestureRecognitionRef, GestureRecog
 
       } catch (err) {
         console.error('Error accediendo a la cámara:', err)
-        setError('No se pudo acceder a la cámara. Verifica los permisos.')
+        setError(t('productShowcase.gestureRecognition.cameraError'))
       } finally {
         setLoading(false)
       }
-    }, [isActive, isInitialized, startRecognition])
+    }, [isActive, isInitialized, startRecognition, t])
 
     const stopCamera = useCallback(() => {
       if (videoRef.current && videoRef.current.srcObject) {
@@ -418,9 +425,9 @@ export const GestureRecognition = forwardRef<GestureRecognitionRef, GestureRecog
             >
               <div className="flex flex-col items-center text-white max-w-sm text-center">
                 <Loader2 className="w-8 h-8 animate-spin mb-2" />
-                <p className="text-sm mb-2">Iniciando reconocimiento...</p>
+                <p className="text-sm mb-2">{t('productShowcase.gestureRecognition.loading')}</p>
                 <p className="text-xs text-gray-300">
-                  Cargando optimizaciones de TensorFlow para CPU
+                  {t('productShowcase.gestureRecognition.loadingDetails')}
                 </p>
               </div>
             </motion.div>
@@ -442,7 +449,7 @@ export const GestureRecognition = forwardRef<GestureRecognitionRef, GestureRecog
                     onClick={restartCamera}
                     className="px-4 py-2 bg-red-600 hover:bg-red-700 rounded-lg text-sm transition-colors"
                   >
-                    Reintentar
+                    {t('productShowcase.gestureRecognition.retryButton')}
                   </button>
                 </div>
               </motion.div>
@@ -460,16 +467,16 @@ export const GestureRecognition = forwardRef<GestureRecognitionRef, GestureRecog
               >
                 <Hand className="w-12 sm:w-16 h-12 sm:h-16 text-white/70 mb-4" />
                 <h3 className="text-white text-lg sm:text-xl font-semibold mb-2 text-center">
-                  Reconocimiento de Gestos Desactivado
+                  {t('productShowcase.gestureRecognition.title')}
                 </h3>
                 <p className="text-white/90 text-center font-medium text-sm sm:text-base mb-2">
-                  Activa el reconocimiento para encender la cámara
+                  {t('productShowcase.gestureRecognition.subtitle')}
                 </p>
                 <p className="text-white/70 text-center text-xs">
-                  La cámara se activará automáticamente al hacer clic en "Activar"
+                  {t('productShowcase.gestureRecognition.description')}
                 </p>
                 <div className="mt-4 px-4 py-2 bg-white/20 backdrop-blur-sm rounded-full">
-                  <span className="text-white text-sm">✋ Gestos disponibles: 8</span>
+                  <span className="text-white text-sm">{t('productShowcase.gestureRecognition.gesturesAvailable')}</span>
                 </div>
               </motion.div>
             )}
@@ -484,7 +491,7 @@ export const GestureRecognition = forwardRef<GestureRecognitionRef, GestureRecog
               exit={{ opacity: 0, scale: 0.8 }}
             >
               <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
-              <span className="text-white text-xs font-medium">RECONOCIENDO</span>
+              <span className="text-white text-xs font-medium">{t('productShowcase.states.recognizing')}</span>
               {showFingers && (
                 <>
                   <span className="text-white text-xs">•</span>
@@ -504,16 +511,11 @@ export const GestureRecognition = forwardRef<GestureRecognitionRef, GestureRecog
             transition={{ delay: 1 }}
           >
             <div className="bg-black/60 backdrop-blur-md rounded-lg p-3 text-white text-center">
-              <p className="text-xs font-medium mb-2">Gestos Disponibles:</p>
+              <p className="text-xs font-medium mb-2">{t('productShowcase.demos.gesture.availableGestures')}</p>
               <div className="text-[10px] text-gray-300 grid grid-cols-2 gap-1 mb-2">
-                <span>✋ Palma Abierta</span>
-                <span>✊ Puño Cerrado</span>
-                <span>👍 Pulgar Arriba</span>
-                <span>👎 Pulgar Abajo</span>
-                <span>☝️ Apuntando</span>
-                <span>✌️ Victoria</span>
-                <span>🤟 Te Amo</span>
-                <span>🫳 Ninguno</span>
+                {(t('productShowcase.demos.gesture.gestureList', { returnObjects: true }) as string[]).map((gesture) => (
+                  <span key={gesture}>{gesture}</span>
+                ))}
               </div>
             </div>
           </motion.div>

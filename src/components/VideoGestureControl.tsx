@@ -2,6 +2,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { forwardRef, useEffect, useImperativeHandle, useRef, useState, useCallback } from 'react'
 import { Play, Pause, SkipForward, SkipBack, Loader2, AlertCircle, Youtube, Eye, Volume2 } from 'lucide-react'
 import { useGestureRecognizer, GestureResult } from '@/hooks/useGestureRecognizer'
+import { useTranslation } from 'react-i18next'
 
 export interface VideoGestureControlRef {
   startCamera: () => Promise<void>
@@ -30,14 +31,16 @@ interface VideoGestureDisplayProps {
 }
 
 const VideoGestureDisplay: React.FC<VideoGestureDisplayProps> = ({ gesture, isRecognizing, lastAction }) => {
+  const { t } = useTranslation();
+  
   const getActionForGesture = (gestureName: string) => {
     switch (gestureName) {
       case 'Pulgar Arriba':
-        return { action: 'Adelantar 10s', icon: SkipForward, color: 'text-green-400' }
+        return { action: t('productShowcase.demos.video.controls.0.action'), icon: SkipForward, color: 'text-green-400' }
       case 'Pulgar Abajo':
-        return { action: 'Retroceder 10s', icon: SkipBack, color: 'text-red-400' }
+        return { action: t('productShowcase.demos.video.controls.1.action'), icon: SkipBack, color: 'text-red-400' }
       case 'Te Amo':
-        return { action: 'Pausar/Reproducir', icon: Play, color: 'text-blue-400' }
+        return { action: t('productShowcase.demos.video.controls.2.action'), icon: Play, color: 'text-blue-400' }
       default:
         return null
     }
@@ -56,7 +59,7 @@ const VideoGestureDisplay: React.FC<VideoGestureDisplayProps> = ({ gesture, isRe
           <div className="bg-black/80 backdrop-blur-md rounded-xl p-4 text-white min-w-[220px]">
             <div className="flex items-center gap-2 mb-3">
               <Eye className="w-4 h-4 text-green-400" />
-              <span className="text-sm font-medium text-green-400">Control de Video Activo</span>
+              <span className="text-sm font-medium text-green-400">{t('productShowcase.demos.video.activeStatus')}</span>
             </div>
             
             {gesture && getActionForGesture(gesture.gesture) ? (
@@ -83,12 +86,12 @@ const VideoGestureDisplay: React.FC<VideoGestureDisplayProps> = ({ gesture, isRe
                 })()}
                 
                 <div className="text-xs text-gray-300">
-                  Confianza: {gesture.confidence}% | {gesture.handedness}
+                  {t('productShowcase.gestureRecognition.confidence')}: {gesture.confidence}% | {gesture.handedness}
                 </div>
               </motion.div>
             ) : (
               <div className="text-sm text-gray-400">
-                Usa: 👍 👎 🤟 para controlar el video
+                {t('productShowcase.videoControl.useGestures')}
               </div>
             )}
 
@@ -100,7 +103,7 @@ const VideoGestureDisplay: React.FC<VideoGestureDisplayProps> = ({ gesture, isRe
                 className="mt-3 pt-2 border-t border-gray-600"
               >
                 <div className="text-xs text-yellow-400">
-                  Última acción: {lastAction}
+                  {t('productShowcase.videoControl.lastAction')}: {lastAction}
                 </div>
               </motion.div>
             )}
@@ -117,6 +120,7 @@ interface VideoPlayerProps {
 }
 
 const VideoPlayer: React.FC<VideoPlayerProps> = ({ onVideoAction }) => {
+  const { t } = useTranslation();
   const playerRef = useRef<any>(null)
   const [isPlaying, setIsPlaying] = useState(false)
   const [isPlayerReady, setIsPlayerReady] = useState(false)
@@ -271,7 +275,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ onVideoAction }) => {
           <div className="flex items-center justify-between text-white text-sm">
             <div className="flex items-center gap-2">
               <Youtube className="w-4 h-4 text-red-500" />
-              <span>Control por Gestos</span>
+              <span>{t('productShowcase.videoControl.gestureControl')}</span>
               {isPlayerReady && (
                 <span className="text-xs opacity-75">
                   {formatTime(currentTime)} / {formatTime(duration)}
@@ -284,7 +288,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ onVideoAction }) => {
                 onClick={seekBackward}
                 className="flex items-center gap-1 hover:text-red-400 transition-colors disabled:opacity-50"
                 disabled={!isPlayerReady}
-                title="Retroceder 10s (👎)"
+                title={`${t('productShowcase.demos.video.controls.1.action')} (👎)`}
               >
                 <SkipBack className="w-4 h-4" />
                 <span className="text-xs">👎</span>
@@ -294,7 +298,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ onVideoAction }) => {
                 onClick={togglePlayPause}
                 className="flex items-center gap-1 hover:text-blue-400 transition-colors disabled:opacity-50"
                 disabled={!isPlayerReady}
-                title="Pausar/Reproducir (🤟)"
+                title={`${t('productShowcase.demos.video.controls.2.action')} (🤟)`}
               >
                 {isPlaying ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4" />}
                 <span className="text-xs">🤟</span>
@@ -304,7 +308,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ onVideoAction }) => {
                 onClick={seekForward}
                 className="flex items-center gap-1 hover:text-green-400 transition-colors disabled:opacity-50"
                 disabled={!isPlayerReady}
-                title="Adelantar 10s (👍)"
+                title={`${t('productShowcase.demos.video.controls.0.action')} (👍)`}
               >
                 <SkipForward className="w-4 h-4" />
                 <span className="text-xs">👍</span>
@@ -329,7 +333,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ onVideoAction }) => {
         <div className="absolute inset-0 flex items-center justify-center bg-black/50">
           <div className="text-white text-center">
             <Loader2 className="w-8 h-8 animate-spin mx-auto mb-2" />
-            <p className="text-sm">Cargando reproductor de YouTube...</p>
+            <p className="text-sm">{t('productShowcase.videoControl.loading')}</p>
           </div>
         </div>
       )}
@@ -357,19 +361,21 @@ export const VideoGestureControl = forwardRef<VideoGestureControlRef, VideoGestu
       stopRecognition
     } = useGestureRecognizer()
 
+    const { t } = useTranslation();
+
     // Manejar acciones de video basadas en gestos
     const handleVideoAction = useCallback((action: string) => {
-      const actionMessages = {
-        forward: 'Video adelantado 10 segundos',
-        backward: 'Video retrocedido 10 segundos',
-        play_pause: 'Video pausado/reproducido'
+      const actionMessages: Record<string, string> = {
+        forward: t('productShowcase.videoControl.actions.forward'),
+        backward: t('productShowcase.videoControl.actions.backward'),
+        play_pause: t('productShowcase.videoControl.actions.playPause')
       }
       
-      setLastAction(actionMessages[action as keyof typeof actionMessages] || action)
+      setLastAction(actionMessages[action] || action)
       
       // Limpiar el mensaje después de 3 segundos
       setTimeout(() => setLastAction(null), 3000)
-    }, [])
+    }, [t])
 
     // Procesar gestos para control de video REAL
     useEffect(() => {
@@ -468,7 +474,7 @@ export const VideoGestureControl = forwardRef<VideoGestureControlRef, VideoGestu
 
       } catch (err) {
         console.error('Error accediendo a la cámara:', err)
-        setError('No se pudo acceder a la cámara. Verifica los permisos.')
+        setError(t('productShowcase.gestureRecognition.cameraError'))
       } finally {
         setLoading(false)
       }
@@ -535,29 +541,26 @@ export const VideoGestureControl = forwardRef<VideoGestureControlRef, VideoGestu
             transition={{ duration: 0.5 }}
           >
             <h3 className="text-lg font-semibold mb-3 text-gray-800">
-              🎬 Video Controlable con Gestos
+              {t('productShowcase.videoControl.title')}
             </h3>
             <VideoPlayer onVideoAction={handleVideoAction} />
             
             {/* Instrucciones */}
             <div className="mt-4 p-3 bg-gradient-to-r from-purple-50 to-pink-50 rounded-lg border border-purple-200">
-              <h4 className="font-semibold text-purple-800 mb-2">📋 Instrucciones:</h4>
+              <h4 className="font-semibold text-purple-800 mb-2">{t('productShowcase.videoControl.instructions')}</h4>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-2 text-sm text-purple-700">
-                <div className="flex items-center gap-2">
-                  <span>👍</span>
-                  <span>Adelantar 10s</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <span>👎</span>
-                  <span>Retroceder 10s</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <span>🤟</span>
-                  <span>Pausar/Reproducir</span>
-                </div>
+                {(t('productShowcase.demos.video.controls', { returnObjects: true }) as Array<{
+                  gesture: string;
+                  action: string;
+                }>).map((control, index) => (
+                  <div key={index} className="flex items-center gap-2">
+                    <span>{control.gesture}</span>
+                    <span>{control.action}</span>
+                  </div>
+                ))}
               </div>
               <p className="text-xs text-purple-600 mt-2">
-                ¡Reproduce el video y usa tus gestos para controlarlo en tiempo real!
+                {t('productShowcase.videoControl.instructionText')}
               </p>
             </div>
           </motion.div>
@@ -600,7 +603,7 @@ export const VideoGestureControl = forwardRef<VideoGestureControlRef, VideoGestu
                 >
                   <div className="flex flex-col items-center text-white max-w-sm text-center">
                     <Loader2 className="w-8 h-8 animate-spin mb-2" />
-                    <p className="text-sm mb-2">Activando control de video...</p>
+                    <p className="text-sm mb-2">{t('productShowcase.demos.video.loading')}</p>
                   </div>
                 </motion.div>
               )}
@@ -620,7 +623,7 @@ export const VideoGestureControl = forwardRef<VideoGestureControlRef, VideoGestu
                         onClick={restartCamera}
                         className="px-4 py-2 bg-red-600 hover:bg-red-700 rounded-lg text-sm transition-colors"
                       >
-                        Reintentar
+                        {t('productShowcase.gestureRecognition.retryButton')}
                       </button>
                     </div>
                   </motion.div>
@@ -637,13 +640,13 @@ export const VideoGestureControl = forwardRef<VideoGestureControlRef, VideoGestu
                   >
                     <Volume2 className="w-12 sm:w-16 h-12 sm:h-16 text-white/70 mb-4" />
                     <h3 className="text-white text-lg sm:text-xl font-semibold mb-2 text-center">
-                      Control de Video con Gestos
+                      {t('productShowcase.videoControl.controlTitle')}
                     </h3>
                     <p className="text-white/90 text-center font-medium text-sm sm:text-base mb-2">
-                      Activa para controlar el video con tus manos
+                      {t('productShowcase.videoControl.controlSubtitle')}
                     </p>
                     <div className="mt-4 px-4 py-2 bg-white/20 backdrop-blur-sm rounded-full">
-                      <span className="text-white text-sm">👍 👎 🤟 Gestos de control</span>
+                      <span className="text-white text-sm">{t('productShowcase.videoControl.gestureControls')}</span>
                     </div>
                   </motion.div>
                 )}
@@ -657,7 +660,7 @@ export const VideoGestureControl = forwardRef<VideoGestureControlRef, VideoGestu
                   exit={{ opacity: 0, scale: 0.8 }}
                 >
                   <div className="w-2 h-2 bg-purple-500 rounded-full animate-pulse" />
-                  <span className="text-white text-xs font-medium">CONTROLANDO VIDEO</span>
+                  <span className="text-white text-xs font-medium">{t('productShowcase.states.controllingVideo')}</span>
                 </motion.div>
               )}
 
@@ -669,7 +672,7 @@ export const VideoGestureControl = forwardRef<VideoGestureControlRef, VideoGestu
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.8 }}
                 >
-                  <span className="text-black text-xs font-medium">Esperando... (2s)</span>
+                  <span className="text-black text-xs font-medium">{t('productShowcase.states.cooldown')}</span>
                 </motion.div>
               )}
             </div>

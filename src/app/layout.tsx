@@ -3,6 +3,7 @@ import { DM_Sans } from "next/font/google";
 import "./globals.css";
 import clsx from "clsx";
 import { SmoothScrolling } from "@/components/SmoothScrolling";
+import { I18nProvider } from "@/components/I18nProvider";
 
 const dmSans = DM_Sans({ subsets: ["latin"] });
 
@@ -24,9 +25,11 @@ export default function RootLayout({
   return (
     <html lang="en" className="relative">
       <body className={clsx(dmSans.className, "antialiased bg-[#EAEEFE]")}>
-        <SmoothScrolling>
-          {children}
-        </SmoothScrolling>
+        <I18nProvider>
+          <SmoothScrolling>
+            {children}
+          </SmoothScrolling>
+        </I18nProvider>
       </body>
     </html>
   );
