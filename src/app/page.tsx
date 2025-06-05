@@ -12,7 +12,7 @@ export default function Home() {
   return (
     <>
       <Header />
-      <section id="hero">
+      <section id="inicio">
         <Hero />
       </section>
       <LogoTicker />
