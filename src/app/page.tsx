@@ -7,7 +7,6 @@ import { Testimonials } from "@/sections/Testimonials";
 import { WhatIs } from "@/sections/WhatIs"; 
 import { CallToAction } from "@/sections/CallToAction";
 import { Footer } from "@/sections/Footer";
-import { Analytics } from "@vercel/analytics/next"      
 
 export default function Home() {
   return (
@@ -35,7 +34,6 @@ export default function Home() {
       <section id="contacto">
         <Footer />
       </section>
-      <Analytics />
     </>
   );
 }
