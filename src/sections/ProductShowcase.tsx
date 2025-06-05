@@ -126,8 +126,8 @@ const MultiDemoPanel: React.FC<MultiDemoProps> = ({
     {
       id: 'simon' as DemoOption,
       icon: Brain,
-      title: 'Simon Says',
-      description: 'Juego de memoria con gestos',
+      title: t('productShowcase.demos.simon.title'),
+      description: t('productShowcase.demos.simon.description'),
       color: 'green'
     }
   ];
@@ -230,7 +230,7 @@ const MultiDemoPanel: React.FC<MultiDemoProps> = ({
                         ? t('productShowcase.demos.gesture.activeStatus')
                         : activeDemo === 'video'
                         ? t('productShowcase.demos.video.activeStatus')
-                        : 'Simon Says Activo'
+                        : t('productShowcase.demos.simon.activeStatus')
                       }
                     </span>
                   </div>
@@ -272,7 +272,7 @@ const MultiDemoPanel: React.FC<MultiDemoProps> = ({
                       ? t('productShowcase.demos.gesture.instructions')
                       : activeDemo === 'video'
                       ? t('productShowcase.demos.video.instructions')
-                      : 'Memoriza y repite las secuencias de gestos para entrenar tu memoria'
+                      : t('productShowcase.demos.simon.instructions')
                     }
                   </p>
                 </div>
