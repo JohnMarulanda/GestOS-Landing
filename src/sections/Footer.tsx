@@ -4,8 +4,11 @@ import Logo from "@/assets/Icono.ico";
 import FondoFooter from "@/assets/hands/FondoFooter.png";
 import Image from "next/image";
 import { FaLinkedin, FaInstagram, FaGithub } from "react-icons/fa";
+import { useTranslation } from 'react-i18next';
 
 export const Footer = () => {
+  const { t } = useTranslation();
+  
   const smoothScroll = (e: React.MouseEvent<HTMLAnchorElement>, targetId: string) => {
     e.preventDefault();
     const element = document.getElementById(targetId);
@@ -42,12 +45,12 @@ export const Footer = () => {
         <Image src={Logo} alt="logo" width={40} height={40} />
       </div>
         <nav className="flex flex-col md:flex-row md:justify-center items-center gap-6 mt-6">
-          <a href="#hero" onClick={(e) => smoothScroll(e, 'hero')} className="text-white/70 hover:text-white transition-colors duration-300 hover:scale-105 transform cursor-pointer">Inicio</a>
-          <a href="#prueba" onClick={(e) => smoothScroll(e, 'prueba')} className="text-white/70 hover:text-white transition-colors duration-300 hover:scale-105 transform cursor-pointer">Características</a>
-          <a href="#que-es" onClick={(e) => smoothScroll(e, 'que-es')} className="text-white/70 hover:text-white transition-colors duration-300 hover:scale-105 transform cursor-pointer">¿Qué es?</a>
-          <a href="#informacion" onClick={(e) => smoothScroll(e, 'informacion')} className="text-white/70 hover:text-white transition-colors duration-300 hover:scale-105 transform cursor-pointer">Información</a>
-          <a href="#testimonios" onClick={(e) => smoothScroll(e, 'testimonios')} className="text-white/70 hover:text-white transition-colors duration-300 hover:scale-105 transform cursor-pointer">Testimonios</a>
-          <a href="#call-to-action" onClick={(e) => smoothScroll(e, 'call-to-action')} className="text-white/70 hover:text-white transition-colors duration-300 hover:scale-105 transform cursor-pointer">Descargar</a>
+          <a href="#hero" onClick={(e) => smoothScroll(e, 'hero')} className="text-white/70 hover:text-white transition-colors duration-300 hover:scale-105 transform cursor-pointer">{t('footer.nav.home')}</a>
+          <a href="#prueba" onClick={(e) => smoothScroll(e, 'prueba')} className="text-white/70 hover:text-white transition-colors duration-300 hover:scale-105 transform cursor-pointer">{t('footer.nav.demo')}</a>
+          <a href="#que-es" onClick={(e) => smoothScroll(e, 'que-es')} className="text-white/70 hover:text-white transition-colors duration-300 hover:scale-105 transform cursor-pointer">{t('footer.nav.whatIs')}</a>
+          <a href="#informacion" onClick={(e) => smoothScroll(e, 'informacion')} className="text-white/70 hover:text-white transition-colors duration-300 hover:scale-105 transform cursor-pointer">{t('footer.nav.information')}</a>
+          <a href="#testimonios" onClick={(e) => smoothScroll(e, 'testimonios')} className="text-white/70 hover:text-white transition-colors duration-300 hover:scale-105 transform cursor-pointer">{t('footer.nav.testimonials')}</a>
+          <a href="#call-to-action" onClick={(e) => smoothScroll(e, 'call-to-action')} className="text-white/70 hover:text-white transition-colors duration-300 hover:scale-105 transform cursor-pointer">{t('footer.nav.download')}</a>
         </nav>
         <div className="flex justify-center gap-6 mt-6">
           <a 
@@ -75,7 +78,7 @@ export const Footer = () => {
             <FaGithub className="w-6 h-6 group-hover:drop-shadow-lg group-hover:shadow-gray-300/50" />
           </a>
         </div>
-        <p className="text-white/60 mt-6" >© 2025 GestOS. Todos los derechos reservados.</p>  
+        <p className="text-white/60 mt-6">{t('footer.copyright')}</p>  
     </div>
   </footer> 
   ) ;

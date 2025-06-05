@@ -556,6 +556,14 @@ const resources = {
       // Footer
       footer: {
         description: "GestOS revoluciona la interacción humano-computadora a través del reconocimiento de gestos en tiempo real.",
+        nav: {
+          home: "Inicio",
+          demo: "Características", 
+          whatIs: "¿Qué es?",
+          information: "Información",
+          testimonials: "Testimonios",
+          download: "Descargar"
+        },
         links: {
           product: "Producto",
           features: "Características",
@@ -569,7 +577,7 @@ const resources = {
           resources: "Recursos",
           contact: "Contacto"
         },
-        copyright: "© 2024 GestOS, Inc. Todos los derechos reservados."
+        copyright: "© 2025 GestOS. Todos los derechos reservados."
       }
     }
   },
@@ -1125,6 +1133,14 @@ const resources = {
       // Footer
       footer: {
         description: "GestOS revolutionizes human-computer interaction through real-time gesture recognition.",
+        nav: {
+          home: "Home",
+          demo: "Features", 
+          whatIs: "What is it?",
+          information: "Information",
+          testimonials: "Testimonials",
+          download: "Download"
+        },
         links: {
           product: "Product",
           features: "Features",
@@ -1138,7 +1154,7 @@ const resources = {
           resources: "Resources",
           contact: "Contact"
         },
-        copyright: "© 2024 GestOS, Inc. All rights reserved."
+        copyright: "© 2025 GestOS, Inc. All rights reserved."
       }
     }
   }
