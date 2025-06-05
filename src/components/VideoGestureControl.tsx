@@ -127,8 +127,8 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ onVideoAction }) => {
   const [currentTime, setCurrentTime] = useState(0)
   const [duration, setDuration] = useState(0)
 
-  // Video de demostración - un video educativo de tecnología
-  const videoId = "M7lc1UVf-VE" // TED Talk sobre IA - cambiar por el video que prefieras
+  // Video de demostración 
+  const videoId = "VQRLujxTm3c" // 
 
   // Cargar la API de YouTube
   useEffect(() => {
