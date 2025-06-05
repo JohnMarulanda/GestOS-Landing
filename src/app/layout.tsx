@@ -4,6 +4,7 @@ import "./globals.css";
 import clsx from "clsx";
 import { SmoothScrolling } from "@/components/SmoothScrolling";
 import { I18nProvider } from "@/components/I18nProvider";
+import { Analytics } from "@vercel/analytics/next";
 
 const dmSans = DM_Sans({ subsets: ["latin"] });
 
@@ -30,6 +31,7 @@ export default function RootLayout({
             {children}
           </SmoothScrolling>
         </I18nProvider>
+        <Analytics />
       </body>
     </html>
   );
