@@ -108,7 +108,7 @@ const resources = {
             },
             gestures: [
               { emoji: "✊", name: "Puño" },
-              { emoji: "✋", name: "Palma" },
+              { emoji: "🤟", name: "Te Amo" },
               { emoji: "✌️", name: "Victoria" },
               { emoji: "👍", name: "Arriba" },
               { emoji: "👎", name: "Abajo" }
@@ -143,7 +143,13 @@ const resources = {
               levelUp: "Avanzando al nivel {{level}}...",
               streakText: "Racha: {{streak}}",
               repeatText: "Repite la secuencia ({{length}}/{{total}})",
-              memory: "MEMORIA"
+              memory: "MEMORIA",
+              getReady: "¡Prepárate!",
+              start: "¡Empezar!",
+              holdGesture: "Mantén tu gesto estable para que sea reconocido",
+              processing: "Procesando gesto...",
+              gestureConfirmed: "¡Gesto confirmado!",
+              detectingGesture: "Detectando gesto..."
             }
           }
         },
@@ -685,7 +691,7 @@ const resources = {
             },
             gestures: [
               { emoji: "✊", name: "Fist" },
-              { emoji: "✋", name: "Palm" },
+              { emoji: "🤟", name: "I Love You" },
               { emoji: "✌️", name: "Victory" },
               { emoji: "👍", name: "Up" },
               { emoji: "👎", name: "Down" }
@@ -720,7 +726,13 @@ const resources = {
               levelUp: "Advancing to level {{level}}...",
               streakText: "Streak: {{streak}}",
               repeatText: "Repeat sequence ({{length}}/{{total}})",
-              memory: "MEMORY"
+              memory: "MEMORY",
+              getReady: "Get Ready!",
+              start: "Start!",
+              holdGesture: "Hold your gesture steady to be recognized",
+              processing: "Processing gesture...",
+              gestureConfirmed: "Gesture confirmed!",
+              detectingGesture: "Detecting gesture..."
             }
           }
         },

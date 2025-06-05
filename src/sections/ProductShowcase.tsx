@@ -140,7 +140,7 @@ const MultiDemoPanel: React.FC<MultiDemoProps> = ({
 
   const simonGestures = [
     { emoji: '✊', name: 'Puño' },
-    { emoji: '✋', name: 'Palma' },
+    { emoji: '🤟', name: 'Te Amo' },
     { emoji: '✌️', name: 'Victoria' },
     { emoji: '👍', name: 'Arriba' },
     { emoji: '👎', name: 'Abajo' }
