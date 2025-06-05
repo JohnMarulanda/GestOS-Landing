@@ -31,6 +31,7 @@ import openPalmImage from "@/assets/hands/OpenPalm.png";
 import downImage from "@/assets/hands/Down.png";
 // Capturas de pantalla de las ventanas de la aplicación
 import gestureTestingImage from "@/assets/screenshots/GestureTesting.png";
+import infoGesturesImage from "@/assets/screenshots/InfoGestures.png";
 import settingsImage from "@/assets/screenshots/Settings.png";
 import helpSupportImage1 from "@/assets/screenshots/HelpSupport1.png";
 import helpSupportImage2 from "@/assets/screenshots/HelpSupport2.png";
@@ -963,24 +964,17 @@ export const WhatIs = () => {
               <div className="relative group lg:order-1">
                 <div className="absolute -inset-1 bg-gradient-to-r from-green-500 to-teal-600 rounded-2xl blur opacity-25 group-hover:opacity-75 transition duration-1000 group-hover:duration-200"></div>
                 <div className="relative bg-white rounded-2xl p-4 shadow-2xl border border-gray-200 group-hover:scale-105 transition-transform duration-300">
-                  <div className="bg-gradient-to-br from-green-50 to-teal-50 rounded-xl p-12 text-center min-h-[300px] flex flex-col items-center justify-center shadow-inner">
-                    <div className="bg-green-500 rounded-full p-6 mb-6 group-hover:scale-110 transition-transform duration-300">
-                      <Brain className="w-16 h-16 text-white" />
-                    </div>
-                    <h5 className="text-xl font-bold text-green-800 mb-3">Catálogo Interactivo</h5>
-                    <p className="text-green-600 text-sm mb-4">Guía completa de gestos disponibles</p>
-                    <div className="flex gap-2 text-2xl group-hover:scale-110 transition-transform duration-300">
-                      <span>✋</span>
-                      <span>✊</span>
-                      <span>👍</span>
-                      <span>👎</span>
-                      <span>☝️</span>
-                      <span>✌️</span>
-                      <span>🤟</span>
-                    </div>
+                  <div className="bg-gray-900 rounded-xl overflow-hidden shadow-inner">
+                    <Image
+                      src={infoGesturesImage}
+                      alt="Info Gestures Window Screenshot"
+                      className="w-full h-auto object-contain hover:scale-105 transition-transform duration-300"
+                      quality={95}
+                      priority={false}
+                    />
                   </div>
                   <div className="absolute top-6 right-6 bg-green-500 text-white px-3 py-1 rounded-full text-xs font-medium shadow-lg">
-                    Próximamente
+                    Catálogo de Gestos
                   </div>
                 </div>
               </div>
