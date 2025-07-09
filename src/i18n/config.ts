@@ -559,6 +559,38 @@ const resources = {
           close: "Cerrar"
         }
       },
+      // VideoDemo
+      videoDemo: {
+        badge: "Demostración en vivo",
+        title: "Ve GestOS en acción",
+        description: "Descubre todas las capacidades de nuestro sistema de reconocimiento de gestos a través de este video demostrativo completo.",
+        previewText: "Haz clic para ver la demostración completa de GestOS en acción",
+        watchButton: "Ver Video de Demostración",
+        stats: {
+          duration: "Duración",
+          features: "Funciones",
+          quality: "Calidad"
+        },
+        gestures: {
+          title: "Gestos Reconocidos",
+          subtitle: "8 gestos disponibles en tiempo real",
+          list: [
+            { emoji: "✋", name: "Palma Abierta" },
+            { emoji: "✊", name: "Puño Cerrado" },
+            { emoji: "👍", name: "Pulgar Arriba" },
+            { emoji: "👎", name: "Pulgar Abajo" },
+            { emoji: "☝️", name: "Señalando" },
+            { emoji: "✌️", name: "Victoria" },
+            { emoji: "🤟", name: "Te Amo" },
+            { emoji: "🫳", name: "Ninguno" }
+          ]
+        },
+        callToAction: {
+          title: "¿Listo para probarlo tú mismo?",
+          description: "Después de ver el video, descarga GestOS y experimenta el control por gestos en tu propio dispositivo.",
+          button: "Descargar Ahora"
+        }
+      },
       // Footer
       footer: {
         description: "GestOS revoluciona la interacción humano-computadora a través del reconocimiento de gestos en tiempo real.",
@@ -1140,6 +1172,38 @@ const resources = {
         buttons: {
           continueViewing: "Continue Viewing",
           close: "Close"
+        }
+      },
+      // VideoDemo
+      videoDemo: {
+        badge: "Live demonstration",
+        title: "See GestOS in action",
+        description: "Discover all the capabilities of our gesture recognition system through this comprehensive demo video.",
+        previewText: "Click to watch the complete demonstration of GestOS in action",
+        watchButton: "Watch Demo Video",
+        stats: {
+          duration: "Duration",
+          features: "Features",
+          quality: "Quality"
+        },
+        gestures: {
+          title: "Recognized Gestures",
+          subtitle: "8 gestures available in real time",
+          list: [
+            { emoji: "✋", name: "Open Palm" },
+            { emoji: "✊", name: "Closed Fist" },
+            { emoji: "👍", name: "Thumb Up" },
+            { emoji: "👎", name: "Thumb Down" },
+            { emoji: "☝️", name: "Pointing" },
+            { emoji: "✌️", name: "Victory" },
+            { emoji: "🤟", name: "I Love You" },
+            { emoji: "🫳", name: "None" }
+          ]
+        },
+        callToAction: {
+          title: "Ready to try it yourself?",
+          description: "After watching the video, download GestOS and experience gesture control on your own device.",
+          button: "Download Now"
         }
       },
       // Footer

@@ -5,6 +5,7 @@ import { ProductShowcase } from "@/sections/ProductShowcase";
 import { Information } from "@/sections/Information";
 import { Testimonials } from "@/sections/Testimonials";
 import { WhatIs } from "@/sections/WhatIs"; 
+import { VideoDemo } from "@/sections/VideoDemo";
 import { CallToAction } from "@/sections/CallToAction";
 import { Footer } from "@/sections/Footer";
 
@@ -18,6 +19,9 @@ export default function Home() {
       <LogoTicker />
       <section id="prueba">
         <ProductShowcase />
+      </section>
+      <section id="video-demo">
+        <VideoDemo />
       </section>
       <section id="informacion">
         <Information />
