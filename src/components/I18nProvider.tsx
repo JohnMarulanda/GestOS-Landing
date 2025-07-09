@@ -18,12 +18,12 @@ export function I18nProvider({ children }: I18nProviderProps) {
           await i18n.init();
         }
 
-        // Verificar y establecer idioma español por defecto
+        // Verificar y establecer idioma inglés por defecto
         const currentLang = i18n.language;
-        if (!currentLang || currentLang === 'undefined' || currentLang === 'en-US' || currentLang === 'en') {
-          console.log('Configurando idioma español por defecto');
-          await i18n.changeLanguage('es');
-          localStorage.setItem('i18nextLng', 'es');
+        if (!currentLang || currentLang === 'undefined' || currentLang === 'es-ES' || currentLang === 'es') {
+          console.log('Configurando idioma inglés por defecto');
+          await i18n.changeLanguage('en');
+          localStorage.setItem('i18nextLng', 'en');
         }
 
         setIsInitialized(true);

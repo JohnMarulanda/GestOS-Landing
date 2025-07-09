@@ -1241,8 +1241,8 @@ i18n
   .use(initReactI18next)
   .init({
     resources,
-    lng: 'es', // idioma por defecto
-    fallbackLng: 'es',
+    lng: 'en', // idioma por defecto
+    fallbackLng: 'en',
     debug: process.env.NODE_ENV === 'development',
 
     interpolation: {
@@ -1260,12 +1260,12 @@ i18n
     }
   });
 
-// Forzar idioma español si no hay idioma guardado
+// Forzar idioma inglés si no hay idioma guardado
 if (typeof window !== 'undefined') {
   const savedLanguage = localStorage.getItem('i18nextLng');
   if (!savedLanguage || savedLanguage === 'undefined') {
-    localStorage.setItem('i18nextLng', 'es');
-    i18n.changeLanguage('es');
+    localStorage.setItem('i18nextLng', 'en');
+    i18n.changeLanguage('en');
   }
 }
 
